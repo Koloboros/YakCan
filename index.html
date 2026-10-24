@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YakCan — Mühendislik modellemesi ve Yalın 6 Sigma</title>
+<meta name="description" content="Üretim yapan şirketlere mühendislik modellemesi ve Yalın 6 Sigma danışmanlığı. Her iş, ekibin her gün kullanacağı çalışan bir araçla teslim edilir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coal:#161210;
+  --ash:#211a17;
+  --ash-2:#2c2420;
+  --line:rgba(255,231,200,.13);
+  --text:#f3e9dc;
+  --muted:#b9aa9b;
+  --ember:#d9481e;
+  --flame:#f2a33a;
+  --hot:#fff1d6;
+  --blue:#4fa3ff;
+  --display:"Big Shoulders Display", "Roboto Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body:"Figtree", system-ui, sans-serif;
+  --wrap:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--coal);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg,canvas{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--flame);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:.005em;margin:0;overflow-wrap:break-word}
+h2{font-size:clamp(40px,5.4vw,68px);max-width:16ch}
+h3{font-size:28px;font-weight:700;line-height:1.1}
+p{margin:0}
+.lead{color:var(--muted);font-size:19px;max-width:60ch}
+section{padding:120px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:end;margin-bottom:64px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(22,18,16,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:32px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:.01em}
+.logo svg{width:22px;height:28px}
+.nav-links{display:flex;gap:28px;margin-left:auto}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:15px;font-weight:500}
+.nav-links a:hover{color:var(--text)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{background:none;border:0;color:var(--muted);font:600 13px var(--body);padding:5px 11px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ash-2);color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:999px;font:600 16px var(--body);text-decoration:none;cursor:pointer;border:1px solid transparent;transition:background .2s,border-color .2s}
+.btn-primary{background:var(--flame);color:#1d130b}
+.btn-primary:hover{background:var(--hot)}
+.btn-ghost{border-color:var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--muted)}
+.nav .btn{padding:9px 18px;font-size:14px}
+
+/* hero */
+.hero{padding:72px 0 96px;border-top:0}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.hero h1{font-size:clamp(46px,6.1vw,94px);margin-bottom:28px}
+.hero .lead{margin-bottom:40px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.flame-card{background:var(--ash);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.flame-stage{position:relative;height:440px;background:radial-gradient(120% 70% at 50% 100%,#2a1a12 0%,var(--coal) 70%)}
+#flame{width:100%;height:100%}
+.flame-ctrl{padding:20px 24px 24px;border-top:1px solid var(--line);display:grid;gap:14px}
+.ctrl-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.ctrl-row label{font-weight:600;font-size:15px}
+.lam{font-family:var(--display);font-weight:700;font-size:30px;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--flame);height:28px}
+.state{display:flex;align-items:center;gap:10px;font-size:15px;min-height:24px}
+.state i{width:10px;height:10px;border-radius:50%;flex:none;background:var(--blue)}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.meter span{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.bar{height:6px;background:var(--ash-2);border-radius:6px;overflow:hidden}
+.bar b{display:block;height:100%;width:30%;border-radius:6px;transition:width .25s}
+.bar.co b{background:var(--ember)}
+.bar.stack b{background:var(--flame)}
+.note{font-size:13px;color:var(--muted)}
+
+/* approach */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.step{padding:40px 36px 44px;background:var(--ash)}
+.step + .step{border-left:1px solid var(--line)}
+.step .num{font-family:var(--display);font-weight:700;font-size:64px;line-height:1;color:var(--ash-2);-webkit-text-stroke:1px rgba(242,163,58,.55);margin-bottom:28px}
+.step h3{margin-bottom:12px}
+.step p{color:var(--muted)}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pillar{background:var(--ash);border:1px solid var(--line);border-radius:20px;padding:28px 28px 32px;display:flex;flex-direction:column;gap:16px}
+.pillar figure{margin:0 0 8px;background:var(--coal);border:1px solid var(--line);border-radius:14px;padding:16px;height:200px;display:flex;align-items:center;justify-content:center}
+.pillar figure svg{width:100%;height:100%}
+.pillar p{color:var(--muted)}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1)}
+.in-view .draw{stroke-dashoffset:0}
+.reveal-dot{opacity:0;transition:opacity .4s 1.6s}
+.in-view .reveal-dot{opacity:1}
+.expand{margin-top:48px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.expand strong{font-weight:600;margin-right:6px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;color:var(--muted)}
+
+/* deliverables */
+.deliver{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:center}
+.deliver ul{list-style:none;margin:32px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.deliver li{padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:baseline}
+.deliver li::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--flame);flex:none;transform:translateY(-1px)}
+.app{background:#f6efe6;color:#2a211c;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:hidden;font-size:14px}
+.app-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#e9dfd2;border-bottom:1px solid #d8ccbd}
+.app-bar i{width:10px;height:10px;border-radius:50%;background:#cdbfae}
+.app-bar span{margin-left:10px;font-weight:600}
+.app-body{display:grid;grid-template-columns:180px 1fr;min-height:320px}
+.app-side{border-right:1px solid #ddd1c2;padding:16px;display:grid;gap:12px;align-content:start}
+.field span{display:block;font-size:12px;color:#7a6a5d;margin-bottom:4px}
+.field div{background:#fff;border:1px solid #d8ccbd;border-radius:8px;padding:7px 10px;font-variant-numeric:tabular-nums}
+.app-main{padding:16px 18px}
+.app-main h4{margin:0 0 8px;font:600 14px var(--body)}
+.alert{margin-top:12px;background:#fde3d8;border:1px solid #f0b39b;color:#8a2c10;border-radius:8px;padding:8px 12px;font-size:13px}
+
+/* process */
+.process{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative}
+.process::before{content:"";position:absolute;left:0;right:0;top:27px;height:1px;background:linear-gradient(90deg,var(--flame),var(--ember) 60%,var(--line))}
+.process li{position:relative;padding-top:68px}
+.process .dot{position:absolute;top:14px;left:0;width:28px;height:28px;border-radius:50%;background:var(--coal);border:2px solid var(--flame);display:flex;align-items:center;justify-content:center;font:700 14px var(--display)}
+.process h3{font-size:24px;margin-bottom:6px}
+.process .dur{font-size:14px;color:var(--flame);margin-bottom:10px;display:block}
+.process p{color:var(--muted);font-size:16px}
+
+/* case */
+.case{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.case > div{padding:36px;background:var(--ash)}
+.case > div + div{border-left:1px solid var(--line)}
+.case h3{font-size:26px;margin-bottom:14px}
+.case p{color:var(--muted)}
+.case .result{background:linear-gradient(160deg,#3a2216,var(--ash) 70%)}
+.tag{display:inline-block;font-size:14px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:20px}
+
+/* compare */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:20px}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{text-align:left;padding:18px 24px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+thead th{font-family:var(--display);font-size:24px;font-weight:700;background:var(--ash)}
+thead th:last-child{color:var(--flame)}
+tbody th{font-weight:600;color:var(--text);width:24%}
+td{color:var(--muted)}
+td:last-child{color:var(--text);background:rgba(242,163,58,.06)}
+
+/* founder */
+.founder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
+.founder p{color:var(--muted);font-size:18px}
+.principles{list-style:none;margin:0;padding:0;display:grid;gap:20px}
+.principles li{padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--ash)}
+.principles strong{display:block;font-size:18px;margin-bottom:4px}
+.principles span{color:var(--muted)}
+
+/* contact */
+.contact{text-align:left;padding:140px 0;background:radial-gradient(70% 90% at 85% 100%,rgba(217,72,30,.28),transparent 70%)}
+.contact h2{max-width:18ch;margin-bottom:24px}
+.contact .lead{margin-bottom:40px}
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:960px){
+  section{padding:88px 0}
+  .hero .wrap,.deliver,.founder,.sec-head{grid-template-columns:1fr}
+  .sec-head{gap:20px;margin-bottom:44px}
+  .steps,.pillars,.case{grid-template-columns:1fr}
+  .step + .step,.case > div + div{border-left:0;border-top:1px solid var(--line)}
+  .process{grid-template-columns:1fr;gap:32px}
+  .process::before{left:13px;right:auto;top:0;bottom:0;width:1px;height:auto;background:linear-gradient(180deg,var(--flame),var(--ember) 60%,var(--line))}
+  .process li{padding-top:0;padding-left:52px}
+  .process .dot{top:0}
+  .nav-links{display:none}
+  .lang{margin-left:auto}
+  .flame-stage{height:340px}
+  .app-body{grid-template-columns:1fr}
+  .app-side{border-right:0;border-bottom:1px solid #ddd1c2;grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .nav .btn{display:none}
+  .step,.case > div{padding:28px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .draw{transition:none;stroke-dashoffset:0}
+  .reveal-dot{transition:none;opacity:1}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="YakCan">
+      <svg viewBox="0 0 22 28" aria-hidden="true"><path d="M11 1c1 5 7 8 7 15a7 7 0 0 1-14 0c0-4 2-6 3-8 1 3 2 4 4 4-2-4-1-8 0-11z" fill="#f2a33a"/><path d="M11 13c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-4 0 1 1 2 2 2-1-2-1-4 0-6z" fill="#4fa3ff"/></svg>
+      YakCan
+    </a>
+    <nav class="nav-links" aria-label="Ana menü">
+      <a href="#yaklasim" data-en="Approach">Yaklaşım</a>
+      <a href="#uzmanlik" data-en="Expertise">Uzmanlık</a>
+      <a href="#teslimat" data-en="Deliverables">Teslimatlar</a>
+      <a href="#surec" data-en="How we work">Nasıl çalışıyoruz</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Dil / Language">
+      <button type="button" data-lang="tr" aria-pressed="true">TR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-primary" href="#iletisim" data-en="Get in touch">İletişim</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1 data-en="We burn the waste and simplify the process.">İsrafı yakıyoruz, süreci sadeleştiriyoruz.</h1>
+      <p class="lead" data-en="Engineering modelling and Lean Six Sigma consulting for companies that make things. Every engagement ends with a working tool your team uses every day.">Üretim yapan şirketlere mühendislik modellemesi ve Yalın 6 Sigma danışmanlığı veriyoruz. Her işi, ekibinizin her gün kullanacağı çalışan bir araçla teslim ediyoruz.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#iletisim" data-en="Request a discovery call">Keşif görüşmesi isteyin</a>
+        <a class="btn btn-ghost" href="#surec" data-en="How we work">Nasıl çalışıyoruz</a>
+      </div>
+    </div>
+
+    <div class="flame-card">
+      <div class="flame-stage"><canvas id="flame" aria-label="Hava fazlasına göre değişen temsili alev" role="img"></canvas></div>
+      <div class="flame-ctrl">
+        <div class="ctrl-row">
+          <label for="lambda" data-en="Excess air ratio (λ)">Hava fazlası katsayısı (λ)</label>
+          <output class="lam" id="lamOut" for="lambda">1,10</output>
+        </div>
+        <input type="range" id="lambda" min="0.80" max="1.60" step="0.01" value="1.10">
+        <div class="state" aria-live="polite"><i id="stateDot"></i><span id="stateText"></span></div>
+        <div class="meters">
+          <div class="meter"><span data-en="CO and soot risk">CO ve is riski</span><div class="bar co"><b id="coBar"></b></div></div>
+          <div class="meter"><span data-en="Stack heat loss">Baca ısı kaybı</span><div class="bar stack"><b id="stackBar"></b></div></div>
+        </div>
+        <p class="note" data-en="Illustrative model. Move the slider: too little air leaves fuel unburnt, too much air carries heat up the stack.">Temsili bir model. Kaydırıcıyı oynatın: az hava yakıtı yakmadan bırakır, fazla hava ısıyı bacadan dışarı taşır.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="yaklasim">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="We observe, we model, we hand over the tool.">Gözlemliyoruz, modelliyoruz, aracını teslim ediyoruz.</h2>
+      <p class="lead" data-en="Classic consulting leaves a report. Software projects take months. We sit between the two: fast, measured and built around how your people actually work.">Klasik danışmanlık bir rapor bırakır, yazılım projeleri aylar sürer. Biz ikisinin arasında duruyoruz: hızlı, ölçülmüş ve ekibinizin gerçekte nasıl çalıştığına göre kurulmuş.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num" aria-hidden="true">1</div>
+        <h3 data-en="Observe">Gözlem</h3>
+        <p data-en="We spend days in your departments to see how the work is really done on the floor, not on paper.">Departmanlarınızda günler geçiririz. İşin kâğıtta değil, sahada nasıl yapıldığını görürüz.</p>
+      </div>
+      <div class="step">
+        <div class="num" aria-hidden="true">2</div>
+        <h3 data-en="Model">Model</h3>
+        <p data-en="We turn the process into numbers: mass and energy balances, capacity, statistical root cause.">Süreci sayılara dökeriz: kütle ve enerji dengesi, kapasite, istatistiksel kök neden.</p>
+      </div>
+      <div class="step">
+        <div class="num" aria-hidden="true">3</div>
+        <h3 data-en="Tool">Araç</h3>
+        <p data-en="We turn the finding into a tool your team will use and test it with them on site. The consultant leaves, the tool stays.">Bulguyu ekibinizin kullanacağı bir araca çevirir, sahada birlikte deneriz. Danışman gider, araç kalır.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="uzmanlik">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="Three pillars, one method">Üç sütun, tek yöntem</h2>
+      <p class="lead" data-en="Our most valuable work sits where two or three of these meet: the statistician rarely knows the chemistry, the process engineer rarely writes code.">En değerli işler bu üçünün kesiştiği yerdedir: istatistikçi prosesin kimyasını, proses mühendisi kod yazmayı nadiren bilir.</p>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar observe">
+        <figure aria-hidden="true">
+          <svg viewBox="0 0 300 160">
+            <line x1="10" y1="34" x2="290" y2="34" stroke="#d9481e" stroke-width="1" stroke-dasharray="5 5" opacity=".7"/>
+            <line x1="10" y1="80" x2="290" y2="80" stroke="#b9aa9b" stroke-width="1" opacity=".35"/>
+            <line x1="10" y1="126" x2="290" y2="126" stroke="#d9481e" stroke-width="1" stroke-dasharray="5 5" opacity=".7"/>
+            <text x="288" y="28" fill="#b9aa9b" font-size="10" text-anchor="end" font-family="Figtree">UCL</text>
+            <text x="288" y="142" fill="#b9aa9b" font-size="10" text-anchor="end" font-family="Figtree">LCL</text>
+            <path class="draw" pathLength="1" d="M14 86 L34 72 L54 92 L74 78 L94 98 L114 70 L134 84 L154 64 L174 90 L194 76 L214 22 L234 82 L254 70 L274 88" fill="none" stroke="#f2a33a" stroke-width="2.2" stroke-linejoin="round"/>
+            <circle class="reveal-dot" cx="214" cy="22" r="6" fill="#d9481e"/>
+            <circle class="reveal-dot" cx="214" cy="22" r="12" fill="none" stroke="#d9481e" stroke-width="1.2" opacity=".6"/>
+          </svg>
+        </figure>
+        <h3 data-en="Lean Six Sigma">Yalın 6 Sigma</h3>
+        <p data-en="DMAIC projects, value stream mapping, OEE, SMED, statistical process control, measurement system analysis and design of experiments.">DMAIC projeleri, değer akışı, OEE, SMED, istatistiksel proses kontrol, ölçüm sistemi analizi ve deney tasarımı.</p>
+      </article>
+
+      <article class="pillar observe">
+        <figure aria-hidden="true">
+          <svg viewBox="0 0 300 160">
+            <rect x="118" y="38" width="64" height="84" rx="8" fill="#211a17" stroke="#b9aa9b" stroke-opacity=".45"/>
+            <text x="150" y="85" fill="#f3e9dc" font-size="11" text-anchor="middle" font-family="Figtree" font-weight="600">Proses</text>
+            <path class="draw" pathLength="1" d="M10 54 C 70 54, 70 62, 118 62" fill="none" stroke="#f2a33a" stroke-width="18" stroke-opacity=".8"/>
+            <path class="draw" pathLength="1" d="M10 104 C 70 104, 70 96, 118 96" fill="none" stroke="#4fa3ff" stroke-width="10" stroke-opacity=".8"/>
+            <path class="draw" pathLength="1" d="M182 60 C 230 60, 230 40, 290 40" fill="none" stroke="#fff1d6" stroke-width="16" stroke-opacity=".85"/>
+            <path class="draw" pathLength="1" d="M182 88 C 230 88, 230 92, 290 92" fill="none" stroke="#d9481e" stroke-width="8" stroke-opacity=".85"/>
+            <path class="draw" pathLength="1" d="M182 108 C 230 108, 230 132, 290 132" fill="none" stroke="#b9aa9b" stroke-width="4" stroke-opacity=".7"/>
+          </svg>
+        </figure>
+        <h3 data-en="Chemical engineering">Kimya mühendisliği</h3>
+        <p data-en="Mass and energy balances, recipe and blend optimisation, drying and thermal processes, water and chemical consumption.">Kütle ve enerji dengesi, reçete ve karışım optimizasyonu, kurutma ve ısıl prosesler, su ve kimyasal tüketimi.</p>
+      </article>
+
+      <article class="pillar observe">
+        <figure aria-hidden="true">
+          <svg viewBox="0 0 300 160">
+            <rect x="30" y="30" width="170" height="100" rx="10" fill="#211a17" stroke="#b9aa9b" stroke-opacity=".45"/>
+            <rect x="12" y="74" width="24" height="12" rx="2" fill="#b9aa9b"/>
+            <path d="M36 80 C 70 66, 110 70, 150 80 C 110 90, 70 94, 36 80 Z" fill="#4fa3ff" opacity=".85"/>
+            <path d="M36 80 C 80 60, 140 64, 182 80 C 140 96, 80 100, 36 80 Z" fill="#f2a33a" opacity=".35"/>
+            <path class="draw" pathLength="1" d="M200 50 H 240 V 24 H 280" fill="none" stroke="#d9481e" stroke-width="3"/>
+            <path class="draw" pathLength="1" d="M280 136 H 240 V 110 H 200" fill="none" stroke="#f2a33a" stroke-width="3"/>
+            <rect x="228" y="56" width="24" height="48" rx="4" fill="none" stroke="#fff1d6" stroke-opacity=".6"/>
+            <text x="240" y="150" fill="#b9aa9b" font-size="10" text-anchor="middle" font-family="Figtree">ısı geri kazanımı</text>
+          </svg>
+        </figure>
+        <h3 data-en="Combustion and thermal systems">Yakma ve ısıl sistemler</h3>
+        <p data-en="Combustion tuning for furnaces, boilers and dryers, waste heat recovery, fuel switching and carbon accounting.">Fırın, kazan ve kurutucularda yakma optimizasyonu, atık ısı geri kazanımı, yakıt dönüşümü ve karbon hesabı.</p>
+      </article>
+    </div>
+
+    <div class="expand">
+      <strong data-en="The same method also covers:">Aynı yöntemle:</strong>
+      <span class="chip" data-en="Production planning">Üretim planlama</span>
+      <span class="chip" data-en="Supply chain and warehouse">Tedarik zinciri ve depo</span>
+      <span class="chip" data-en="Maintenance management">Bakım yönetimi</span>
+      <span class="chip" data-en="Data analytics and decision support">Veri analitiği ve karar destek</span>
+      <span class="chip" data-en="Department tools">Departman araçları</span>
+      <span class="chip" data-en="Training simulations">Eğitim simülasyonları</span>
+    </div>
+  </div>
+</section>
+
+<section id="teslimat">
+  <div class="wrap deliver">
+    <div>
+      <h2 data-en="Not a report. A working tool.">Rapor değil, çalışan araç.</h2>
+      <p class="lead" style="margin-top:24px" data-en="Every engagement closes with at least one analysis and at least one working tool. Tools run in the browser, need no installation, and your data stays with you.">Her iş en az bir analiz çıktısı ve en az bir çalışan araçla kapanır. Araçlar tarayıcıda çalışır, kurulum istemez ve veriniz sizde kalır.</p>
+      <ul>
+        <li data-en="Capacity and bottleneck model">Kapasite ve darboğaz modeli</li>
+        <li data-en="Planning and sequencing tool">Planlama ve sıralama aracı</li>
+        <li data-en="Recipe and setting calculator">Reçete ve ayar hesaplayıcı</li>
+        <li data-en="SPC and quality log">SPC ve kalite kayıt aracı</li>
+        <li data-en="Shift handover log">Vardiya devir defteri</li>
+        <li data-en="Control plan and standard work">Kontrol planı ve standart iş talimatı</li>
+      </ul>
+    </div>
+    <div class="app observe" aria-label="Örnek araç ekranı: kalite kayıt ve kontrol grafiği" role="img">
+      <div class="app-bar"><i></i><i></i><i></i><span data-en="Quality log · Line 3">Kalite kayıt · Hat 3</span></div>
+      <div class="app-body">
+        <div class="app-side">
+          <div class="field"><span data-en="Product">Ürün</span><div>KM-240</div></div>
+          <div class="field"><span data-en="Shift">Vardiya</span><div>B</div></div>
+          <div class="field"><span data-en="Measurement (mm)">Ölçüm (mm)</span><div>12,48</div></div>
+          <div class="field"><span>Cpk</span><div>1,21</div></div>
+        </div>
+        <div class="app-main">
+          <h4 data-en="Control chart, last 20 samples">Kontrol grafiği, son 20 numune</h4>
+          <svg viewBox="0 0 320 150" aria-hidden="true">
+            <line x1="0" y1="24" x2="320" y2="24" stroke="#d9481e" stroke-dasharray="4 4"/>
+            <line x1="0" y1="75" x2="320" y2="75" stroke="#a89888"/>
+            <line x1="0" y1="126" x2="320" y2="126" stroke="#d9481e" stroke-dasharray="4 4"/>
+            <path class="draw" pathLength="1" d="M8 80 L24 70 L40 86 L56 74 L72 90 L88 66 L104 78 L120 72 L136 88 L152 62 L168 76 L184 84 L200 70 L216 92 L232 80 L248 98 L264 104 L280 110 L296 116 L312 132" fill="none" stroke="#2a211c" stroke-width="2"/>
+            <circle class="reveal-dot" cx="312" cy="132" r="5" fill="#d9481e"/>
+          </svg>
+          <div class="alert" data-en="Rule 1: point outside control limits. Check the setting before the next batch.">Kural 1: kontrol sınırı dışında nokta. Sonraki partiden önce ayarı kontrol edin.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="surec">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="Start small, grow on evidence">Küçük başlarız, kanıtla büyürüz</h2>
+      <p class="lead" data-en="Most clients start with a short discovery. Each next step is decided on measured results.">Çoğu müşteri kısa bir keşifle başlar. Her sonraki adıma ölçülmüş sonuçlara bakarak birlikte karar veririz.</p>
+    </div>
+    <ol class="process">
+      <li><span class="dot" aria-hidden="true">1</span>
+        <h3 data-en="Operations discovery">Operasyon keşfi</h3><span class="dur" data-en="1–3 weeks">1-3 hafta</span>
+        <p data-en="Observation in 4–5 departments, an opportunity map and a prioritised project list.">4-5 departmanda gözlem, fırsat haritası ve önceliklendirilmiş proje listesi.</p></li>
+      <li><span class="dot" aria-hidden="true">2</span>
+        <h3 data-en="DMAIC project">DMAIC projesi</h3><span class="dur" data-en="6–16 weeks">6-16 hafta</span>
+        <p data-en="One measurable problem, a full improvement cycle and before-and-after measurement.">Tek bir ölçülebilir problem, tam iyileştirme döngüsü ve önce-sonra ölçümü.</p></li>
+      <li><span class="dot" aria-hidden="true">3</span>
+        <h3 data-en="Engineering model">Mühendislik modeli</h3><span class="dur" data-en="2–8 weeks">2-8 hafta</span>
+        <p data-en="A capacity, cost, energy or process model so you can test the scenario before you decide.">Kapasite, maliyet, enerji ya da proses modeli: karar vermeden önce senaryoyu deneyin.</p></li>
+      <li><span class="dot" aria-hidden="true">4</span>
+        <h3 data-en="Tool building">Araç geliştirme</h3><span class="dur" data-en="1–4 weeks per tool">Araç başına 1-4 hafta</span>
+        <p data-en="A department-specific tool that removes a repetitive manual task.">Tekrarlı manuel işi ortadan kaldıran, departmana özel araç.</p></li>
+      <li><span class="dot" aria-hidden="true">5</span>
+        <h3 data-en="Sustain">Sürdürme</h3><span class="dur" data-en="Monthly">Aylık</span>
+        <p data-en="Tool upkeep, a monthly performance review and control plan follow-up.">Araç bakımı, aylık performans incelemesi ve kontrol planı takibi.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag" data-en="Fictional example">Kurgusal örnek</span>
+        <h2 data-en="A textile company, twelve weeks">Bir tekstil firması, on iki hafta</h2>
+      </div>
+      <p class="lead" data-en="An illustration of a typical engagement across five departments: planning, weaving, dyehouse, quality control and shipping.">Beş departmanda tipik bir işin nasıl ilerlediğine dair bir örnek: planlama, dokuma, boyahane, kalite kontrol ve sevkiyat.</p>
+    </div>
+    <div class="case">
+      <div>
+        <h3 data-en="What we saw">Gözlemlenen</h3>
+        <p data-en="Re-dyeing because colours did not match, a weekly plan built by hand in spreadsheets, and quality measurements written on paper that nobody looked at.">Renk tutmadığı için tekrar boyama, elle hazırlanan haftalık plan ve kâğıda yazılıp kimsenin bakmadığı kalite ölçümleri.</p>
+      </div>
+      <div>
+        <h3 data-en="What we did">Yapılan</h3>
+        <p data-en="A DMAIC project on re-dyeing, a planning tool, a tablet-based quality log with control charts and a recipe correction calculator.">Tekrar boyama için DMAIC projesi, planlama aracı, tablette çalışan kalite kayıt ve kontrol grafiği aracı, reçete düzeltme hesaplayıcısı.</p>
+      </div>
+      <div class="result">
+        <h3 data-en="What stayed">Kalan</h3>
+        <p data-en="An improvement documented with before-and-after measurement, a control plan and three tools in daily use.">Önce-sonra ölçümüyle belgelenmiş iyileşme, kontrol planı ve her gün kullanılan üç araç.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="Where we sit">Nerede duruyoruz</h2>
+      <p class="lead" data-en="We are not a replacement for your ERP or your training partner. We fill the gap between the two.">ERP'nizin ya da eğitim ortağınızın yerine geçmiyoruz. İkisinin arasındaki boşluğu dolduruyoruz.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th data-en="Classic consulting">Klasik danışmanlık</th><th data-en="Software project">Yazılım projesi</th><th>YakCan</th></tr></thead>
+        <tbody>
+          <tr><th data-en="Output">Çıktı</th><td data-en="Report, training, slides">Rapor, eğitim, sunum</td><td data-en="Packaged software, long project">Paket yazılım, uzun proje</td><td data-en="Measured improvement and a department tool">Ölçülmüş iyileşme ve departmana özel araç</td></tr>
+          <tr><th data-en="Process understanding">Süreç anlayışı</th><td data-en="Strong">Güçlü</td><td data-en="Limited">Sınırlı</td><td data-en="Strong, from the floor">Güçlü, sahadan</td></tr>
+          <tr><th data-en="Engineering and statistics">Mühendislik ve istatistik</th><td data-en="Varies">Değişken</td><td data-en="Limited">Sınırlı</td><td data-en="Core of the work">İşin çekirdeği</td></tr>
+          <tr><th data-en="Time to a usable tool">Kullanılır araca süre</th><td data-en="None">Yok</td><td data-en="Months">Aylar</td><td data-en="Days to weeks">Günler ile haftalar</td></tr>
+          <tr><th data-en="After the consultant leaves">Danışman gidince</th><td data-en="Habits often fade">Alışkanlıklar çoğu zaman söner</td><td data-en="Unused modules">Kullanılmayan modüller</td><td data-en="A tool in daily use and a control plan">Her gün kullanılan araç ve kontrol planı</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap founder">
+    <div>
+      <h2 style="margin-bottom:28px" data-en="About the founder">Kurucu hakkında</h2>
+      <p data-en="A chemical engineer and Lean Six Sigma Black Belt. Started on the furnace floor and today supports many high-temperature processes through measurement and guidance. Brings the shop floor, statistics and code to the same table.">Kimya mühendisi ve Yalın 6 Sigma Black Belt. Kariyerine fırın sahasında başladı; bugün çok sayıda yüksek sıcaklık prosesine ölçüm ve yönlendirmeyle destek veriyor. Sahayı, istatistiği ve kodu aynı masaya getiriyor.</p>
+    </div>
+    <ul class="principles">
+      <li><strong data-en="We do not claim what we have not measured">Ölçmediğimizi iddia etmeyiz</strong><span data-en="Every improvement is proven with a measurement protocol agreed at the start.">Her iyileşme, başta üzerinde anlaşılan ölçüm protokolüyle kanıtlanır.</span></li>
+      <li><strong data-en="Every tool is tested">Her araç test edilir</strong><span data-en="Models and tools are checked against known cases before they reach you.">Modeller ve araçlar size ulaşmadan bilinen vakalara karşı doğrulanır.</span></li>
+      <li><strong data-en="Your data stays yours">Veriniz sizde kalır</strong><span data-en="We work under NDA and nothing leaves without your permission.">Gizlilik sözleşmesiyle çalışırız; izniniz olmadan hiçbir veri dışarı çıkmaz.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="contact" id="iletisim">
+  <div class="wrap">
+    <h2 data-en="The first step is a short discovery call">İlk adım kısa bir keşif görüşmesi</h2>
+    <p class="lead" data-en="Tell us where your team loses the most time. We will decide together where to start.">Ekibinizin en çok zamanı nerede kaybettiğini anlatın, nereden başlanacağına birlikte karar verelim.</p>
+    <a class="btn btn-primary" href="mailto:merhaba@yakcan.com" data-en="Send an email">E-posta gönderin</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 YakCan</span>
+    <span data-en="Engineering modelling · Lean Six Sigma · Combustion">Mühendislik modellemesi, Yalın 6 Sigma, yakma</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- language ---------- */
+  var nodes = document.querySelectorAll('[data-en]');
+  nodes.forEach(function(n){ n.dataset.tr = n.textContent; });
+  var lang = 'tr';
+  function setLang(l){
+    lang = l;
+    document.documentElement.lang = l;
+    nodes.forEach(function(n){ n.textContent = l === 'en' ? n.dataset.en : n.dataset.tr; });
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
+    try { localStorage.setItem('yakcan-lang', l); } catch(e){}
+    updateReadout();
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang); });
+  });
+
+  /* ---------- reveal drawings once ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); } });
+  }, {threshold:.35});
+  document.querySelectorAll('.observe').forEach(function(el){ io.observe(el); });
+
+  /* ---------- flame ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cv = document.getElementById('flame'), ctx = cv.getContext('2d');
+  var slider = document.getElementById('lambda');
+  var W = 0, H = 0, dpr = 1, particles = [], frame = 0, running = true, lam = 1.10;
+
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+  function mix(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+  var HOT=[255,241,214], FLAME=[242,163,58], EMBER=[217,72,30], BLUE=[79,163,255], PALE=[150,195,255];
+
+  function size(){
+    var r = cv.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  function params(){
+    var rich = clamp((1.02 - lam)/0.22, 0, 1);
+    var lean = clamp((lam - 1.22)/0.38, 0, 1);
+    var opt = clamp(1 - rich*1.3 - lean*0.8, 0, 1);
+    return {rich:rich, lean:lean, opt:opt};
+  }
+
+  function spawn(p){
+    var cx = W/2, by = H - 46, n = Math.round(6 + p.rich*3 - p.lean*2);
+    for (var i=0;i<n;i++){
+      particles.push({
+        x: cx + (Math.random()-.5)*26, y: by,
+        vx: (Math.random()-.5)*.5,
+        vy: -(1.7 + Math.random()*1.3)*(1 + p.lean*.35),
+        life: 0,
+        max: (74 + Math.random()*30)*(1 + p.rich*.6 - p.lean*.38) * (H/440),
+        r: 14 + Math.random()*11,
+        smoke: false
+      });
+    }
+  }
+
+  function step(p){
+    var cx = W/2;
+    for (var i=particles.length-1;i>=0;i--){
+      var q = particles[i];
+      q.life++;
+      if (q.smoke){
+        q.vx += (Math.random()-.5)*.08; q.x += q.vx; q.y += q.vy; q.r += .25;
+      } else {
+        q.vx += (Math.random()-.5)*.16*(1+p.lean*1.6) + (cx - q.x)*.0025;
+        q.x += q.vx + Math.sin((q.y + frame*3)*.045)*.35*(1+p.lean*1.5);
+        q.y += q.vy; q.vy *= .996;
+        if (p.rich > 0 && q.life/q.max > .82 && Math.random() < p.rich*.07){
+          particles.push({x:q.x, y:q.y, vx:(Math.random()-.5)*.3, vy:-.7-Math.random()*.4, life:0, max:110, r:12, smoke:true});
+        }
+      }
+      if (q.life > q.max || q.y < -40) particles.splice(i,1);
+    }
+    frame++;
+  }
+
+  function draw(p){
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#161210';
+    ctx.fillRect(0,0,W,H);
+    var cx = W/2, by = H - 46;
+    var g = ctx.createRadialGradient(cx, by, 4, cx, by, 160);
+    g.addColorStop(0, 'rgba(242,163,58,' + (0.22 - p.lean*.1) + ')');
+    g.addColorStop(1, 'rgba(242,163,58,0)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+    // smoke first
+    particles.forEach(function(q){
+      if (!q.smoke) return;
+      var t = q.life/q.max;
+      ctx.fillStyle = 'rgba(78,70,66,' + (.22*(1-t)) + ')';
+      ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.283); ctx.fill();
+    });
+
+    ctx.globalCompositeOperation = 'lighter';
+    particles.forEach(function(q){
+      if (q.smoke) return;
+      var t = q.life/q.max;
+      var c = t < .5 ? mix(HOT, FLAME, t/.5) : mix(FLAME, EMBER, (t-.5)/.5);
+      var blueW = t < .7 ? p.opt*(1 - t/.7) : 0;
+      c = mix(c, BLUE, clamp(blueW*1.15, 0, 1));
+      c = mix(c, PALE, p.lean*.55);
+      var a = (1-t)*.16*(1 - p.lean*.45)*(1 + p.rich*.25)*(1 - p.opt*.45*t);
+      var rad = q.r*(1 - t*.55);
+      var gr = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, rad);
+      gr.addColorStop(0, 'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+a+')');
+      gr.addColorStop(1, 'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+',0)');
+      ctx.fillStyle = gr;
+      ctx.beginPath(); ctx.arc(q.x, q.y, rad, 0, 6.283); ctx.fill();
+    });
+
+    // burner nozzle
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#3a302b';
+    ctx.fillRect(cx-34, by+6, 68, 14);
+    ctx.fillStyle = '#5a4c44';
+    ctx.fillRect(cx-22, by-2, 44, 10);
+  }
+
+  function loop(){
+    if (!running) return;
+    var p = params();
+    spawn(p); step(p); draw(p);
+    requestAnimationFrame(loop);
+  }
+
+  function still(){
+    particles = []; var p = params();
+    for (var i=0;i<140;i++){ spawn(p); step(p); }
+    draw(p);
+  }
+
+  var TXT = {
+    tr: {
+      rich: 'Eksik yanma: yakıt tam yanmıyor, CO ve is oluşuyor.',
+      opt: 'Optimum bölge: temiz ve verimli yanma.',
+      lean: 'Fazla hava: alev soğuyor, ısı bacadan kaçıyor.',
+      lack: 'hava eksikliği', excess: 'hava fazlası'
+    },
+    en: {
+      rich: 'Incomplete combustion: fuel is left unburnt, CO and soot form.',
+      opt: 'Sweet spot: clean, efficient combustion.',
+      lean: 'Too much air: the flame cools, heat escapes up the stack.',
+      lack: 'air deficit', excess: 'excess air'
+    }
+  };
+
+  function updateReadout(){
+    var out = document.getElementById('lamOut');
+    var txt = TXT[lang];
+    out.textContent = lang === 'tr' ? lam.toFixed(2).replace('.', ',') : lam.toFixed(2);
+    var state, color;
+    if (lam < 1.02){ state = txt.rich; color = '#d9481e'; }
+    else if (lam <= 1.22){ state = txt.opt; color = '#4fa3ff'; }
+    else { state = txt.lean; color = '#f2a33a'; }
+    var pct = Math.round((lam - 1)*100);
+    document.getElementById('stateText').textContent = state + ' (' + (pct < 0 ? txt.lack + ' %' + Math.abs(pct) : txt.excess + ' %' + pct) + ')';
+    document.getElementById('stateDot').style.background = color;
+    var co = clamp((1.06 - lam)/0.24, 0, 1);
+    var stack = 0.18 + clamp((lam - 1.0)/0.6, 0, 1)*0.8;
+    document.getElementById('coBar').style.width = Math.round(4 + co*96) + '%';
+    document.getElementById('stackBar').style.width = Math.round(stack*100) + '%';
+  }
+
+  slider.addEventListener('input', function(){
+    lam = parseFloat(slider.value);
+    updateReadout();
+    if (reduce) still();
+  });
+
+  size();
+  window.addEventListener('resize', function(){ size(); if (reduce) still(); });
+
+  if (reduce){ still(); }
+  else {
+    var heroIO = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var was = running; running = e.isIntersecting;
+        if (running && !was) requestAnimationFrame(loop);
+      });
+    });
+    heroIO.observe(cv);
+    requestAnimationFrame(loop);
+  }
+
+  var saved = 'tr';
+  try { saved = localStorage.getItem('yakcan-lang') || 'tr'; } catch(e){}
+  setLang(saved === 'en' ? 'en' : 'tr');
+})();
+</script>
+</body>
+</html>
