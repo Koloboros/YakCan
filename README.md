@@ -4,5 +4,5 @@ Proses mühendisliği ve Yalın 6 Sigma danışmanlığı için tek sayfalık we
 
 - Tek dosya: `index.html` (kurulum yok, tarayıcıda açılır)
 - Türkçe / İngilizce
-- Örnek çalışma: çimento döner fırını için interaktif 3B model (Three.js) ve ısı dengesi, kalma süresi, CO₂ hesapları
+- Örnek çalışma: pompa debisini vanayla kısmak ile devir kontrolü (VFD) karşılaştırması; pompa ve sistem eğrileri, benzerlik yasaları
 - Yayın: GitHub Pages

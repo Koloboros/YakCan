@@ -8,9 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
-</script>
 <style>
 :root{
   --bg:#14171a;
@@ -78,38 +75,41 @@ section{padding:96px 0;border-top:1px solid var(--line)}
 .case-head{padding:28px 32px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px}
 .case-head .tag{display:inline-block;font-size:14px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 10px;margin-bottom:12px}
 .case-head p{color:var(--muted)}
-.kiln{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
-.stage{position:relative;min-height:460px;overflow:hidden;background:radial-gradient(90% 80% at 50% 60%,#232a30,#15191c);border-right:1px solid var(--line)}
-#kilnCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
-#kilnCanvas:active{cursor:grabbing}
-.lbl{position:absolute;font-size:13px;color:var(--text);background:rgba(20,23,26,.82);border:1px solid var(--line);border-radius:6px;padding:2px 8px;pointer-events:none;white-space:nowrap;transform:translate(-50%,-130%)}
-.legend{position:absolute;left:16px;bottom:16px;font-size:13px;color:var(--muted)}
-.legend .scale{width:180px;height:8px;border-radius:4px;background:linear-gradient(90deg,#1a1035,#7b1d6f 30%,#d24a2b 55%,#f39a21 80%,#fff3b0);margin:6px 0 2px}
-.legend .ends{display:flex;justify-content:space-between}
-.hint{position:absolute;right:16px;top:14px;font-size:13px;color:var(--muted)}
-.fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted)}
-.controls{padding:22px 24px;display:grid;gap:14px;align-content:start}
+.pump{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+.scheme{grid-column:1/-1;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#191d21,#15181b);padding:12px 18px 6px;position:relative}
+.scheme svg{width:100%;height:auto}
+.mode{position:absolute;left:18px;top:14px;display:flex;border:1px solid var(--line);border-radius:8px;padding:2px;background:var(--bg)}
+.mode button{background:none;border:0;color:var(--muted);font:600 14px var(--body);padding:6px 12px;border-radius:6px;cursor:pointer}
+.mode button[aria-pressed="true"]{background:var(--panel-2);color:var(--text)}
+.chart{padding:18px 18px 8px;border-right:1px solid var(--line)}
+.chart svg{width:100%;height:auto}
+.controls{padding:22px 24px;display:grid;gap:16px;align-content:start}
 .ctl label{display:flex;justify-content:space-between;font-size:15px;color:var(--muted)}
 .ctl output{color:var(--text);font-variant-numeric:tabular-nums;font-weight:600}
 .ctl input[type=range]{width:100%;accent-color:var(--accent);margin:4px 0 0}
-.ctl select{width:100%;margin-top:6px;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:7px 8px;font:inherit;font-size:15px}
+.ctl input[type=number]{width:110px;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:inherit;font-size:15px}
+.ctl.row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ctl.row label{display:block}
+.compare{display:grid;gap:10px;margin-top:4px}
+.cmp{display:grid;grid-template-columns:92px 1fr 70px;align-items:center;gap:10px;font-size:15px}
+.cmp .track{height:12px;background:var(--panel-2);border-radius:6px;overflow:hidden}
+.cmp .track b{display:block;height:100%;border-radius:6px;transition:width .3s}
+.cmp span:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .results{border-top:1px solid var(--line);padding:24px 32px 28px}
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
 .kpi span{display:block;font-size:14px;color:var(--muted)}
-.kpi strong{font-family:var(--head);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi strong{font-family:var(--head);font-size:28px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi strong.good{color:#7fc79a}
 .kpi small{display:block;font-size:14px;color:var(--muted)}
-.balance{margin-top:28px}
-.balance h4{margin-bottom:10px}
-.bars{display:flex;height:26px;border-radius:6px;overflow:hidden;background:var(--panel-2)}
-.bars div{height:100%;transition:width .3s}
-.bkey{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:10px;font-size:14px;color:var(--muted)}
-.bkey span{display:flex;align-items:center;gap:6px}
-.bkey i{width:10px;height:10px;border-radius:2px;display:block}
-.check{margin-top:20px;font-size:15px;padding:10px 14px;border-radius:8px;background:var(--panel-2)}
+.note{margin-top:18px;font-size:15px;color:var(--muted)}
 details{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
 summary{cursor:pointer;font-weight:600}
 details .method{margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 40px;font-size:16px;color:var(--muted)}
-details code{font-family:inherit;color:var(--text)}
+
+.sectors{padding:56px 0}
+.sectors .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.sectors .row span{border:1px solid var(--line);border-radius:999px;padding:8px 16px;color:var(--text);font-size:16px;background:var(--panel)}
+.sectors p{color:var(--muted);font-size:16px}
 
 .mini{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:24px}
 .mcase{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:28px}
@@ -151,10 +151,11 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 @media (max-width:980px){
-  .hero .wrap,.case-head,.kiln,.mini,.about,details .method{grid-template-columns:1fr}
+  .hero .wrap,.case-head,.pump,.mini,.about,details .method{grid-template-columns:1fr}
+  .chart{border-right:0;border-bottom:1px solid var(--line)}
+  .mode{position:static;margin:4px 0 8px;width:max-content}
   .what,.exp{grid-template-columns:1fr;gap:32px}
   .steps{grid-template-columns:1fr 1fr}
-  .stage{border-right:0;border-bottom:1px solid var(--line);min-height:340px}
   .kpis{grid-template-columns:1fr 1fr}
   .links{display:none}
   .lang{margin-left:auto}
@@ -286,67 +287,106 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   </div>
 </section>
 
+<section class="sectors">
+  <div class="wrap">
+    <h3 data-en="Typical sectors for the method">Yöntemin uygulandığı tipik sektörler</h3>
+    <div class="row">
+      <span data-en="Glass">Cam</span><span data-en="Ceramics">Seramik</span><span data-en="Cement and lime">Çimento ve kireç</span><span data-en="Textiles">Tekstil</span><span data-en="Food and packaging">Gıda ve ambalaj</span><span data-en="Metals and foundry">Metal ve döküm</span><span data-en="Chemicals">Kimya</span>
+    </div>
+  </div>
+</section>
+
 <section id="ornekler">
   <div class="wrap">
     <h2 data-en="Case studies">Örnek çalışmalar</h2>
-    <p class="intro" data-en="Examples of our method. No client data; the kiln runs on typical published values.">Yöntemimizi gösteren örnekler. Müşteri verisi içermez; fırın modeli yayımlanmış tipik değerlerle çalışır.</p>
+    <p class="intro" data-en="Examples of our method. No client data.">Yöntemimizi gösteren örnekler. Müşteri verisi içermez.</p>
 
     <article class="case">
       <div class="case-head">
         <div>
           <span class="tag" data-en="Interactive model">İnteraktif model</span>
-          <h3 data-en="Cement rotary kiln: heat balance, residence time and CO₂">Çimento döner fırını: ısı dengesi, kalma süresi ve CO₂</h3>
+          <h3 data-en="Throttling a pump with a valve or controlling its speed?">Pompayı vanayla mı kısmalı, devriyle mi?</h3>
         </div>
-        <p data-en="Combustion, calcination, shell loss and residence time on one screen. Change a parameter; every result updates.">Yanma, kalsinasyon, kabuk kaybı ve kalma süresi tek ekranda. Bir parametreyi değiştirin, tüm sonuçlar güncellensin.</p>
+        <p data-en="Reducing flow with a valve is like holding the accelerator while braking. Set the required flow and see where the energy goes, using real pump and system curves.">Debiyi vanayla kısmak, gaza basarken frenle yavaşlamak gibidir. Gereken debiyi seçin ve enerjinin nereye gittiğini gerçek pompa ve sistem eğrileriyle görün.</p>
       </div>
-      <div class="kiln">
-        <div class="stage">
-          <canvas id="kilnCanvas" aria-label="Döner fırının 3B modeli; kabuk sıcaklığına göre renklendirilmiş" role="img"></canvas>
-          <div class="lbl" id="lblFeed" data-en="Feed end">Besleme ucu</div>
-          <div class="lbl" id="lblBurner" data-en="Burner end">Brülör ucu</div>
-          <div class="hint" data-en="Drag to rotate, scroll to zoom">Sürükleyerek çevirin, kaydırarak yakınlaşın</div>
-          <div class="legend"><span data-en="Shell temperature">Kabuk sıcaklığı</span><div class="scale"></div><div class="ends"><span>50 °C</span><span>400 °C</span></div></div>
-          <div class="fallback" id="fallback" data-en="The 3D view needs an internet connection to load. The calculations below still work.">3B görünümün yüklenmesi için internet bağlantısı gerekiyor. Aşağıdaki hesaplar yine çalışır.</div>
+      <div class="pump">
+        <div class="scheme">
+          <div class="mode" role="group" aria-label="Kontrol yöntemi">
+            <button type="button" data-mode="valve" aria-pressed="true" data-en="Valve throttling">Vana ile kısma</button>
+            <button type="button" data-mode="vfd" aria-pressed="false" data-en="Speed control (VFD)">Devir kontrolü (VFD)</button>
+          </div>
+          <svg viewBox="0 0 900 230" aria-hidden="true">
+            <g font-family="Source Sans 3, sans-serif" font-size="13" fill="#9ba6af">
+              <rect x="20" y="110" width="110" height="96" rx="4" fill="none" stroke="#3a434b" stroke-width="2"/>
+              <rect x="22" y="142" width="106" height="62" fill="#6fb3d9" opacity=".22"/>
+              <rect x="760" y="22" width="120" height="86" rx="4" fill="none" stroke="#3a434b" stroke-width="2"/>
+              <rect x="762" y="52" width="116" height="54" fill="#6fb3d9" opacity=".22"/>
+              <path d="M130 186 H700 V64 H762" fill="none" stroke="#2c343b" stroke-width="16" stroke-linejoin="round"/>
+              <path id="flowPath" d="M130 186 H700 V64 H762" fill="none" stroke="#6fb3d9" stroke-width="4" stroke-dasharray="3 15" stroke-linecap="round" stroke-linejoin="round"/>
+              <g id="valveG">
+                <polygon points="500,170 522,186 500,202" fill="#23282d" stroke="#9ba6af"/>
+                <polygon points="544,170 522,186 544,202" fill="#23282d" stroke="#9ba6af"/>
+                <line x1="522" y1="186" x2="522" y2="140" stroke="#9ba6af" stroke-width="2"/>
+                <ellipse cx="522" cy="138" rx="16" ry="5" fill="none" stroke="#9ba6af" stroke-width="2"/>
+                <rect id="gate" x="516" y="172" width="12" height="0" fill="#d2553a"/>
+              </g>
+              <line x1="300" y1="148" x2="300" y2="112" stroke="#5f6b75" stroke-width="5"/>
+              <rect x="266" y="72" width="68" height="40" rx="6" fill="#23282d" stroke="#5f6b75"/>
+              <text x="300" y="97" text-anchor="middle" fill="#c9d1d7" data-en="Motor">Motor</text>
+              <g id="vfdBox" opacity="0">
+                <rect x="262" y="18" width="76" height="34" rx="6" fill="rgba(127,199,154,.14)" stroke="#7fc79a"/>
+                <text id="vfdHz" x="300" y="40" text-anchor="middle" fill="#7fc79a" font-weight="600">VFD 50 Hz</text>
+                <line x1="300" y1="52" x2="300" y2="72" stroke="#7fc79a"/>
+              </g>
+              <circle cx="300" cy="186" r="36" fill="#1f2429" stroke="#e0873a" stroke-width="2"/>
+              <g id="impeller" transform="rotate(0 300 186)">
+                <g fill="none" stroke="#e0873a" stroke-width="3" stroke-linecap="round">
+                  <path d="M300 186 C 306 176, 316 170, 326 170"/><path d="M300 186 C 312 188, 318 198, 320 208"/><path d="M300 186 C 300 200, 292 210, 282 214"/><path d="M300 186 C 288 190, 278 186, 272 176"/><path d="M300 186 C 292 174, 292 164, 298 156"/>
+                </g>
+                <circle cx="300" cy="186" r="5" fill="#e0873a"/>
+              </g>
+              <line x1="736" y1="142" x2="736" y2="52" stroke="#5f6b75" stroke-dasharray="3 3"/>
+              <line x1="730" y1="142" x2="742" y2="142" stroke="#5f6b75"/><line x1="730" y1="52" x2="742" y2="52" stroke="#5f6b75"/>
+              <text id="hsLbl" x="748" y="140" data-en="static head">statik yükseklik</text>
+              <text x="75" y="224" text-anchor="middle" data-en="Suction tank">Emme tankı</text>
+              <text x="300" y="242" text-anchor="middle" data-en="Pump">Pompa</text>
+              <text x="522" y="224" text-anchor="middle" data-en="Control valve">Kontrol vanası</text>
+              <text x="820" y="42" text-anchor="middle" fill="#c9d1d7" data-en="Process">Proses</text>
+              <text id="flowLbl" x="410" y="172" text-anchor="middle" fill="#c9d1d7">150 m³/sa</text>
+            </g>
+          </svg>
+        </div>
+        <div class="chart">
+          <svg id="curve" viewBox="0 0 560 370" role="img" aria-label="Pompa ve sistem eğrileri"></svg>
         </div>
         <div class="controls">
-          <div class="ctl"><label for="iProd"><span data-en="Clinker production">Klinker üretimi</span><output id="oProd"></output></label><input id="iProd" type="range" min="1000" max="6000" step="100" value="3000"></div>
-          <div class="ctl"><label for="iFuel"><span data-en="Fuel">Yakıt</span></label>
-            <select id="iFuel"><option value="ng" data-en="Natural gas">Doğal gaz</option><option value="pc" data-en="Petroleum coke">Petrokok</option></select></div>
-          <div class="ctl"><label for="iLam"><span data-en="Excess air ratio λ">Hava fazlası λ</span><output id="oLam"></output></label><input id="iLam" type="range" min="1.00" max="1.60" step="0.01" value="1.10"></div>
-          <div class="ctl"><label for="iTg"><span data-en="Preheater exit gas">Ön ısıtıcı çıkış gazı</span><output id="oTg"></output></label><input id="iTg" type="range" min="250" max="450" step="5" value="320"></div>
-          <div class="ctl"><label for="iTs"><span data-en="Mean shell temperature">Ortalama kabuk sıcaklığı</span><output id="oTs"></output></label><input id="iTs" type="range" min="150" max="350" step="5" value="250"></div>
-          <div class="ctl"><label for="iD"><span data-en="Kiln diameter">Fırın çapı</span><output id="oD"></output></label><input id="iD" type="range" min="3" max="6" step="0.1" value="4.5"></div>
-          <div class="ctl"><label for="iL"><span data-en="Kiln length">Fırın boyu</span><output id="oL"></output></label><input id="iL" type="range" min="40" max="90" step="1" value="60"></div>
-          <div class="ctl"><label for="iS"><span data-en="Slope">Eğim</span><output id="oS"></output></label><input id="iS" type="range" min="2" max="5" step="0.1" value="3.5"></div>
-          <div class="ctl"><label for="iN"><span data-en="Rotation speed">Dönüş hızı</span><output id="oN"></output></label><input id="iN" type="range" min="1" max="5" step="0.1" value="3.5"></div>
+          <div class="ctl"><label for="iQ"><span data-en="Required flow">Gereken debi</span><output id="oQ"></output></label><input id="iQ" type="range" min="60" max="220" step="5" value="150"></div>
+          <div class="ctl"><label for="iHs"><span data-en="Static head">Statik yükseklik</span><output id="oHs"></output></label><input id="iHs" type="range" min="0" max="30" step="1" value="15"></div>
+          <div class="ctl"><label for="iHr"><span data-en="Operating hours per year">Yıllık çalışma süresi</span><output id="oHr"></output></label><input id="iHr" type="range" min="2000" max="8760" step="100" value="6000"></div>
+          <div class="ctl row"><label for="iPr" data-en="Electricity price (TL/kWh)">Elektrik fiyatı (TL/kWh)</label><input id="iPr" type="number" min="0" step="0.1" value="4.0"></div>
+          <div class="compare">
+            <div class="cmp"><span data-en="Valve">Vana</span><div class="track"><b id="bV" style="background:#d2553a"></b></div><span id="pV"></span></div>
+            <div class="cmp"><span>VFD</span><div class="track"><b id="bF" style="background:#7fc79a"></b></div><span id="pF"></span></div>
+          </div>
         </div>
       </div>
       <div class="results">
         <div class="kpis">
-          <div class="kpi"><span data-en="Specific heat consumption">Özgül ısı tüketimi</span><strong id="rShc"></strong><small data-en="MJ/kg clinker">MJ/kg klinker</small></div>
-          <div class="kpi"><span data-en="Fuel rate">Yakıt debisi</span><strong id="rFuel"></strong><small data-en="t/h">t/sa</small></div>
-          <div class="kpi"><span data-en="Material residence time">Malzeme kalma süresi</span><strong id="rRes"></strong><small data-en="minutes, in the kiln">dakika, fırın içinde</small></div>
-          <div class="kpi"><span data-en="Total CO₂">Toplam CO₂</span><strong id="rCo2"></strong><small id="rCo2s"></small></div>
-          <div class="kpi"><span data-en="Shell heat loss">Kabuk ısı kaybı</span><strong id="rShell"></strong><small id="rShells"></small></div>
-          <div class="kpi"><span data-en="Exit gas flow">Çıkış gazı debisi</span><strong id="rGas"></strong><small data-en="Nm³/h, without false air">Nm³/sa, kaçak hava hariç</small></div>
-          <div class="kpi"><span data-en="O₂ in exit gas (dry)">Çıkış gazında O₂ (kuru)</span><strong id="rO2"></strong><small>%</small></div>
-          <div class="kpi"><span data-en="Fuel LHV">Yakıt alt ısıl değeri</span><strong id="rLhv"></strong><small>MJ/kg</small></div>
+          <div class="kpi"><span data-en="Power saved with VFD">VFD ile güç farkı</span><strong class="good" id="rSave"></strong><small id="rSaveKw"></small></div>
+          <div class="kpi"><span data-en="Energy per year">Yıllık enerji farkı</span><strong id="rMwh"></strong><small>MWh</small></div>
+          <div class="kpi"><span data-en="Cost per year">Yıllık maliyet farkı</span><strong id="rCost"></strong><small data-en="TL, at the price you entered">TL, girdiğiniz fiyatla</small></div>
+          <div class="kpi"><span data-en="Pump speed with VFD">VFD ile pompa devri</span><strong id="rSpeed"></strong><small data-en="% of nominal">% nominal</small></div>
         </div>
-        <div class="balance">
-          <h4 data-en="Where the heat goes (per kg clinker)">Isı nereye gidiyor (kg klinker başına)</h4>
-          <div class="bars" id="bars"></div>
-          <div class="bkey" id="bkey"></div>
-        </div>
-        <p class="check" id="check"></p>
+        <p class="note" id="pNote"></p>
         <details>
           <summary data-en="Method and assumptions">Hesap yöntemi ve varsayımlar</summary>
           <div class="method">
-            <p data-en="Combustion: stoichiometric oxygen from the fuel's C, H, S, N, O content; flue gas = CO₂, H₂O, SO₂, N₂ and excess O₂ at the chosen λ. Natural gas is taken as methane (LHV 50.0 MJ/kg); petroleum coke as C 85%, H 3.5%, S 5% (LHV 33.0 MJ/kg).">Yanma: yakıtın C, H, S, N, O içeriğinden stokiyometrik oksijen; baca gazı = CO₂, H₂O, SO₂, N₂ ve seçilen λ'daki fazla O₂. Doğal gaz metan kabul edildi (alt ısıl değer 50,0 MJ/kg); petrokok C %85, H %3,5, S %5 (alt ısıl değer 33,0 MJ/kg).</p>
-            <p data-en="Calcination and process CO₂: raw meal / clinker = 1.55, raw meal with 77% CaCO₃ and 1.5% MgCO₃. Theoretical heat of clinker formation 1.75 MJ/kg. This gives about 0.54 t process CO₂ per t clinker.">Kalsinasyon ve proses CO₂: farin / klinker = 1,55; farinde %77 CaCO₃ ve %1,5 MgCO₃. Klinker oluşumunun teorik ısısı 1,75 MJ/kg. Bu, ton klinker başına yaklaşık 0,54 t proses CO₂ verir.</p>
-            <p data-en="Shell loss: the shell is split into 40 segments along a typical temperature profile (hottest near the burning zone) scaled to the mean you set. Each segment loses heat by natural convection (h = 1.24·ΔT^⅓ W/m²K) and radiation (ε = 0.8, ambient 25 °C).">Kabuk kaybı: kabuk, tipik bir sıcaklık profiline göre (pişme bölgesine yakın en sıcak) 40 parçaya ayrılır ve girdiğiniz ortalamaya ölçeklenir. Her parça doğal taşınım (h = 1,24·ΔT^⅓ W/m²K) ve ışınımla (ε = 0,8, ortam 25 °C) ısı kaybeder.</p>
-            <p data-en="Residence time: US Bureau of Mines correlation t = 1.77·L·√θ·F / (S·D·N), with angle of repose θ = 35° and F = 1 (no dam), S in degrees and N in rpm.">Kalma süresi: US Bureau of Mines korelasyonu t = 1,77·L·√θ·F / (S·D·N); şev açısı θ = 35°, F = 1 (baraj yok), S derece ve N dev/dk.</p>
-            <p data-en="Heat balance: fuel heat = clinker formation + raw meal moisture + exit gas sensible heat + shell loss + cooler loss (0.45 MJ/kg, fixed) + other losses (0.10 MJ/kg, fixed). Since exit gas loss grows with fuel, the balance is solved for fuel directly. Gas heat capacities are mean values between 25 °C and exit temperature.">Isı dengesi: yakıt ısısı = klinker oluşumu + farin nemi + çıkış gazının duyulur ısısı + kabuk kaybı + soğutucu kaybı (0,45 MJ/kg, sabit) + diğer kayıplar (0,10 MJ/kg, sabit). Çıkış gazı kaybı yakıtla birlikte arttığından denge doğrudan yakıt için çözülür. Gaz ısı kapasiteleri 25 °C ile çıkış sıcaklığı arasındaki ortalama değerlerdir.</p>
-            <p data-en="Not included: false air, bypass, alternative fuels, cooler and preheater design. The model is for understanding direction and order of magnitude, not for guarantee calculations.">Dahil olmayanlar: kaçak hava, bypass, alternatif yakıtlar, soğutucu ve ön ısıtıcı tasarımı. Model, yön ve büyüklük mertebesini anlamak içindir; garanti hesabı için değildir.</p>
+            <p data-en="Pump curve at nominal speed: H = 52 − 0.0003·Q² (H in m, Q in m³/h). Best efficiency point at 200 m³/h, 80% peak efficiency; efficiency falls parabolically away from it.">Nominal devirde pompa eğrisi: H = 52 − 0,0003·Q² (H metre, Q m³/sa). En iyi verim noktası 200 m³/sa, tepe verim %80; verim bu noktadan uzaklaştıkça parabolik düşer.</p>
+            <p data-en="System curve: H = static head + 0.000465·Q², i.e. pipe and fitting friction grows with the square of flow.">Sistem eğrisi: H = statik yükseklik + 0,000465·Q²; boru ve bağlantı sürtünmesi debinin karesiyle artar.</p>
+            <p data-en="Valve: the pump stays at nominal speed and runs on its own curve; the valve burns the difference between pump head and system head.">Vana: pompa nominal devirde kendi eğrisinde çalışır; vana, pompa basma yüksekliği ile sistem ihtiyacı arasındaki farkı yakar.</p>
+            <p data-en="VFD: the affinity laws (Q ∝ n, H ∝ n²) give the speed at which the pump curve meets the system curve at the required flow. Efficiency is read at the equivalent nominal-speed flow.">VFD: benzerlik yasaları (Q ∝ n, H ∝ n²) pompa eğrisinin gereken debide sistem eğrisini kestiği devri verir. Verim, eşdeğer nominal devir debisinden okunur.</p>
+            <p data-en="Shaft power P = ρ·g·Q·H / η, water at 1000 kg/m³; motor efficiency 93%, drive efficiency 97% (VFD case only).">Mil gücü P = ρ·g·Q·H / η, su yoğunluğu 1000 kg/m³; motor verimi %93, sürücü verimi %97 (yalnızca VFD durumunda).</p>
+            <p data-en="A typical mid-size water pump, not a specific product. For a real decision, use the manufacturer's curves and measured operating points.">Belirli bir ürün değil, tipik bir orta boy su pompası. Gerçek bir karar için üreticinin eğrileri ve ölçülmüş çalışma noktaları kullanılmalı.</p>
           </div>
         </details>
       </div>
@@ -492,326 +532,133 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 </footer>
 
 <script>
-/* ---------- model: pure engineering calculations ---------- */
-window.KILN = (function(){
-  var TA = 25, SIGMA = 5.670e-8, EPS = 0.8, VM = 22.414;
-  var FUELS = {
-    ng: {C:0.75, H:0.25, S:0, N:0, O:0, W:0, lhv:50000},
-    pc: {C:0.85, H:0.035, S:0.05, N:0.015, O:0.01, W:0.01, lhv:33000}
-  };
-  var CP = {CO2:42.0, H2O:34.5, N2:29.6, O2:30.6, SO2:44.0};   // kJ/kmol·K, mean 25 → ~300 °C
-  var RAW = 1.55, CACO3 = 0.77, MGCO3 = 0.015, MOIST = 0.005;
-  var Q_FORM = 1750, Q_COOLER = 450, Q_OTHER = 100, HV_WATER = 2257;  // kJ/kg clinker, kJ/kg water
-
-  function profile(x){ // x: 0 = burner end, 1 = feed end; relative shell temperature shape
-    return 0.55 + 0.9*Math.exp(-Math.pow((x-0.22)/0.14,2)) + 0.25*(1-x);
+/* ---------- pump model: real curves, affinity laws ---------- */
+window.PUMP = (function(){
+  var H0 = 52, K = 0.0003, C = 0.000465, QBEP = 200, ETAMAX = 0.80, ETAM = 0.93, ETAD = 0.97, RHOG = 1000*9.81;
+  function eta(q){ var x = (q-QBEP)/QBEP; return Math.max(0.15, ETAMAX*(1 - x*x)); }
+  function pumpH(q, r){ return r*r*H0 - K*q*q; }
+  function sysH(q, hs){ return hs + C*q*q; }
+  function qMax(hs){ return Math.sqrt((H0-hs)/(K+C)); }
+  function calc(q, hs){
+    var qm = qMax(hs); q = Math.min(q, qm);
+    var Q = q/3600;
+    var hv = pumpH(q,1), hsys = sysH(q,hs);
+    var pV = RHOG*Q*hv/eta(q)/ETAM/1000;
+    var r = Math.sqrt((hsys + K*q*q)/H0);
+    var pF = RHOG*Q*hsys/eta(q/r)/ETAM/ETAD/1000;
+    return {q:q, qMax:qm, hv:hv, hsys:hsys, r:r, pV:pV, pF:pF, valveFrac:(hv-hsys)/hv};
   }
-  var NSEG = 40, shapeMean = 0;
-  for (var i=0;i<NSEG;i++) shapeMean += profile((i+0.5)/NSEG);
-  shapeMean /= NSEG;
-  function shellT(x, Tmean){ return TA + (Tmean-TA)*profile(x)/shapeMean; }
-
-  function calc(p){
-    var f = FUELS[p.fuel], lam = p.lam;
-    var o2st = f.C/12 + f.H/4 + f.S/32 - f.O/32;               // kmol O2 / kg fuel
-    var g = { CO2:f.C/12, H2O:f.H/2 + f.W/18, SO2:f.S/32,
-              N2:0.79/0.21*lam*o2st + f.N/28, O2:(lam-1)*o2st };
-    var dT = p.Tg - TA;
-    var Bf = (g.CO2*CP.CO2 + g.H2O*CP.H2O + g.SO2*CP.SO2 + g.N2*CP.N2 + g.O2*CP.O2) * dT;  // kJ per kg fuel
-
-    var co2Proc = RAW*(CACO3*44.01/100.09 + MGCO3*44.01/84.31);  // kg CO2 / kg clinker
-    var water = RAW*MOIST;
-    var procKmolCO2 = co2Proc/44.01, procKmolH2O = water/18.015;
-    var Gp = (procKmolCO2*CP.CO2 + procKmolH2O*CP.H2O) * dT;     // kJ / kg clinker
-
-    // shell
-    var area = Math.PI*p.D*p.L, segA = area/NSEG, Qshell = 0;
-    for (var i=0;i<NSEG;i++){
-      var Ts = shellT((i+0.5)/NSEG, p.Ts), d = Ts - TA;
-      var h = 1.24*Math.cbrt(Math.max(d,0));
-      var q = h*d + EPS*SIGMA*(Math.pow(Ts+273.15,4) - Math.pow(TA+273.15,4));
-      Qshell += q*segA;                                          // W
-    }
-    var mcl = p.prod*1000/86400;                                 // kg/s clinker
-    var shellKJ = Qshell/1000/mcl;                               // kJ/kg clinker
-
-    var Qevap = water*HV_WATER;
-    var A = Q_FORM + Qevap + Gp + shellKJ + Q_COOLER + Q_OTHER;  // kJ/kg clinker excluding fuel flue gas
-    var fuel = A/(f.lhv - Bf);                                   // kg fuel / kg clinker
-    var shc = fuel*f.lhv/1000;                                   // MJ/kg clinker
-
-    var nFuel = g.CO2+g.H2O+g.SO2+g.N2+g.O2;
-    var gasNm3kg = (fuel*nFuel + procKmolCO2 + procKmolH2O)*VM;
-    var dry = fuel*(g.CO2+g.SO2+g.N2+g.O2) + procKmolCO2;
-    var o2dry = 100*fuel*g.O2/dry;
-
-    var co2Fuel = fuel*f.C*44.01/12.011;                         // kg/kg clinker
-    var slopeDeg = Math.atan(p.S/100)*180/Math.PI;
-    var res = 1.77*p.L*Math.sqrt(35)*1/(slopeDeg*p.D*p.N);       // minutes
-
-    return {
-      shc:shc, fuelTph: fuel*mcl*3.6, res:res,
-      co2Proc:co2Proc*1000, co2Fuel:co2Fuel*1000,
-      shellMW: Qshell/1e6, shellMJ: shellKJ/1000,
-      gasNm3h: gasNm3kg*mcl*3600, o2dry:o2dry, lhv:f.lhv/1000,
-      parts: [
-        {k:'form', v:Q_FORM/1000},
-        {k:'gas',  v:(fuel*Bf + Gp)/1000},
-        {k:'cooler', v:Q_COOLER/1000},
-        {k:'shell', v:shellKJ/1000},
-        {k:'other', v:(Q_OTHER+Qevap)/1000}
-      ]
-    };
-  }
-  return {calc:calc, shellT:shellT};
+  return {calc:calc, pumpH:pumpH, sysH:sysH, H0:H0};
 })();
 
 /* ---------- language + UI ---------- */
 (function(){
-  var lang = 'tr';
+  var lang = 'tr', mode = 'valve';
   var nodes = document.querySelectorAll('[data-en]');
   nodes.forEach(function(n){ n.dataset.tr = n.innerHTML; });
-
   var T = {
-    tr:{ dec:',', perT:'kg/t klinker', proc:'proses', fuel:'yakıt', shellPer:'MJ/kg klinker',
-         parts:{form:'Klinker oluşumu', gas:'Çıkış gazı', cooler:'Soğutucu', shell:'Kabuk', other:'Diğer ve nem'},
-         tph:' t/gün', min:' dk', within:'Özgül ısı tüketimi, yeni ön ısıtıcılı ve ön kalsinatörlü fırınlar için literatürde verilen yaklaşık 2,9–3,3 MJ/kg aralığında.',
-         above:'Özgül ısı tüketimi, yeni fırınlar için verilen yaklaşık 2,9–3,3 MJ/kg aralığının üstünde. En büyük kalemlere bakın.',
-         below:'Özgül ısı tüketimi, yeni fırınlar için verilen yaklaşık 2,9–3,3 MJ/kg aralığının altında; bu model kaçak havayı ve bypass kayıplarını içermiyor.' },
-    en:{ dec:'.', perT:'kg/t clinker', proc:'process', fuel:'fuel', shellPer:'MJ/kg clinker',
-         parts:{form:'Clinker formation', gas:'Exit gas', cooler:'Cooler', shell:'Shell', other:'Other and moisture'},
-         tph:' t/d', min:' min', within:'Specific heat consumption is within the roughly 2.9–3.3 MJ/kg range reported for new preheater/precalciner kilns.',
-         above:'Specific heat consumption is above the roughly 2.9–3.3 MJ/kg range reported for new kilns. Look at the largest items.',
-         below:'Specific heat consumption is below the roughly 2.9–3.3 MJ/kg range reported for new kilns; this model leaves out false air and bypass losses.' }
+    tr:{dec:',', th:'.', flow:'Debi (m³/sa)', head:'Basma yüksekliği (m)', pump:'Pompa, nominal devir', pumpV:'Pompa, VFD devri', sys:'Sistem eğrisi', lost:'vanada kaybolan', hr:' sa/yıl', m:' m', q:' m³/sa',
+        capped:'Bu statik yükseklikte pompa en fazla {q} m³/sa verebiliyor; debi buna sınırlandı.',
+        note:'Vana, pompanın ürettiği {hv} m basma yüksekliğinin {pct}\'ini ısıya çeviriyor. VFD ile pompa yalnızca sistemin ihtiyaç duyduğu {hs} m\'yi üretiyor.',
+        open:'Vana tamamen açık: kısılacak bir şey yok. Bu noktada VFD, sürücünün kendi kaybı kadar fazla tüketir; VFD her zaman kazandırmaz.'},
+    en:{dec:'.', th:',', flow:'Flow (m³/h)', head:'Head (m)', pump:'Pump, nominal speed', pumpV:'Pump, VFD speed', sys:'System curve', lost:'lost in valve', hr:' h/yr', m:' m', q:' m³/h',
+        capped:'At this static head the pump can deliver at most {q} m³/h; flow was limited to that.',
+        note:'The valve turns {pct} of the {hv} m head the pump produces into heat. With a VFD the pump produces only the {hs} m the system needs.',
+        open:'The valve is fully open: there is nothing to throttle. Here the VFD uses slightly more because of its own losses; a VFD does not always pay off.'}
   };
-  var COLORS = {form:'#6fb3d9', gas:'#e0873a', cooler:'#c9a96b', shell:'#d2553a', other:'#5f6b75'};
-
   function $(id){ return document.getElementById(id); }
-  function fmt(v, d){ var s = v.toFixed(d); return T[lang].dec === ',' ? s.replace('.', ',') : s; }
-  function grp(v){ var s = Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, lang==='tr' ? '.' : ','); return s; }
+  function fmt(v,d){ var s=v.toFixed(d); return T[lang].dec===',' ? s.replace('.',',') : s; }
+  function grp(v){ return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, T[lang].th); }
 
-  function params(){
-    return { prod:+$('iProd').value, fuel:$('iFuel').value, lam:+$('iLam').value, Tg:+$('iTg').value,
-             Ts:+$('iTs').value, D:+$('iD').value, L:+$('iL').value, S:+$('iS').value, N:+$('iN').value };
-  }
+  var X0=62, X1=540, Y0=24, Y1=318, QM=260, HM=60;
+  function X(q){ return X0 + q/QM*(X1-X0); }
+  function Y(h){ return Y1 - h/HM*(Y1-Y0); }
+  function curvePath(f){ var d=''; for (var q=0; q<=QM; q+=4){ var h=f(q); if (h<0) break; d += (d?'L':'M') + X(q).toFixed(1) + ' ' + Y(Math.min(h,HM)).toFixed(1); } return d; }
 
+  var state = {};
   function render(){
-    var p = params(), r = window.KILN.calc(p), t = T[lang];
-    $('oProd').textContent = grp(p.prod) + t.tph;
-    $('oLam').textContent = fmt(p.lam,2);
-    $('oTg').textContent = p.Tg + ' °C';
-    $('oTs').textContent = p.Ts + ' °C';
-    $('oD').textContent = fmt(p.D,1) + ' m';
-    $('oL').textContent = p.L + ' m';
-    $('oS').textContent = '%' + fmt(p.S,1);
-    $('oN').textContent = fmt(p.N,1) + (lang==='tr' ? ' dev/dk' : ' rpm');
-    if (lang==='en') $('oS').textContent = fmt(p.S,1) + ' %';
+    var t = T[lang], qIn = +$('iQ').value, hs = +$('iHs').value, hr = +$('iHr').value, pr = +$('iPr').value || 0;
+    var r = window.PUMP.calc(qIn, hs); state = r;
+    $('oQ').textContent = grp(r.q) + t.q; $('oHs').textContent = hs + t.m; $('oHr').textContent = grp(hr) + t.hr;
 
-    $('rShc').textContent = fmt(r.shc,2);
-    $('rFuel').textContent = fmt(r.fuelTph,1);
-    $('rRes').textContent = fmt(r.res,0);
-    $('rCo2').textContent = grp(r.co2Proc + r.co2Fuel);
-    $('rCo2s').textContent = t.perT + ' (' + grp(r.co2Proc) + ' ' + t.proc + ' + ' + grp(r.co2Fuel) + ' ' + t.fuel + ')';
-    $('rShell').textContent = fmt(r.shellMW,1) + ' MW';
-    $('rShells').textContent = fmt(r.shellMJ,3) + ' ' + t.shellPer;
-    $('rGas').textContent = grp(r.gasNm3h);
-    $('rO2').textContent = fmt(r.o2dry,1);
-    $('rLhv').textContent = fmt(r.lhv,1);
+    var g = '';
+    for (var q=0;q<=QM;q+=50){ g += '<line x1="'+X(q)+'" y1="'+Y0+'" x2="'+X(q)+'" y2="'+Y1+'" stroke="#262c32"/><text x="'+X(q)+'" y="'+(Y1+18)+'" text-anchor="middle">'+q+'</text>'; }
+    for (var h=0;h<=HM;h+=10){ g += '<line x1="'+X0+'" y1="'+Y(h)+'" x2="'+X1+'" y2="'+Y(h)+'" stroke="#262c32"/><text x="'+(X0-10)+'" y="'+(Y(h)+4)+'" text-anchor="end">'+h+'</text>'; }
+    g += '<text x="'+((X0+X1)/2)+'" y="'+(Y1+40)+'" text-anchor="middle">'+t.flow+'</text>';
+    g += '<text transform="rotate(-90 16 '+((Y0+Y1)/2)+')" x="16" y="'+((Y0+Y1)/2)+'" text-anchor="middle">'+t.head+'</text>';
+    var pN = curvePath(function(q){ return window.PUMP.pumpH(q,1); });
+    var pR = curvePath(function(q){ return window.PUMP.pumpH(q,r.r); });
+    var sC = curvePath(function(q){ return window.PUMP.sysH(q,hs); });
+    var xa = X(r.q), ya = Y(r.hv), yb = Y(r.hsys);
+    g += '<line x1="'+xa+'" y1="'+Y0+'" x2="'+xa+'" y2="'+Y1+'" stroke="#5f6b75" stroke-dasharray="3 4"/>';
+    g += '<path d="'+pN+'" fill="none" stroke="#e0873a" stroke-width="2.5"/>';
+    g += '<path d="'+pR+'" fill="none" stroke="#7fc79a" stroke-width="2" stroke-dasharray="6 5" opacity="'+(mode==='vfd'?1:.45)+'"/>';
+    g += '<path d="'+sC+'" fill="none" stroke="#6fb3d9" stroke-width="2.5"/>';
+    g += '<line x1="'+xa+'" y1="'+ya+'" x2="'+xa+'" y2="'+yb+'" stroke="#d2553a" stroke-width="6" opacity="'+(mode==='valve'?.85:.3)+'"/>';
+    var right = r.q < 100;
+    g += '<text x="'+(right ? xa+10 : xa-10)+'" y="'+((ya+yb)/2+4)+'" text-anchor="'+(right?'start':'end')+'" fill="#d2553a" opacity="'+(mode==='valve'?1:.4)+'">'+fmt(r.hv-r.hsys,1)+' m '+t.lost+'</text>';
+    g += '<circle cx="'+xa+'" cy="'+ya+'" r="6" fill="#e0873a" stroke="#14171a" stroke-width="2" opacity="'+(mode==='valve'?1:.45)+'"/>';
+    g += '<circle cx="'+xa+'" cy="'+yb+'" r="6" fill="'+(mode==='vfd'?'#7fc79a':'#6fb3d9')+'" stroke="#14171a" stroke-width="2"/>';
+    var lx = X1-176, ly = Y0+8;
+    g += '<rect x="'+(lx-10)+'" y="'+(ly-4)+'" width="184" height="68" rx="6" fill="#14171a" opacity=".85"/>';
+    g += '<line x1="'+lx+'" y1="'+(ly+10)+'" x2="'+(lx+22)+'" y2="'+(ly+10)+'" stroke="#e0873a" stroke-width="2.5"/><text x="'+(lx+30)+'" y="'+(ly+14)+'">'+t.pump+'</text>';
+    g += '<line x1="'+lx+'" y1="'+(ly+30)+'" x2="'+(lx+22)+'" y2="'+(ly+30)+'" stroke="#7fc79a" stroke-width="2" stroke-dasharray="6 5"/><text x="'+(lx+30)+'" y="'+(ly+34)+'">'+t.pumpV+'</text>';
+    g += '<line x1="'+lx+'" y1="'+(ly+50)+'" x2="'+(lx+22)+'" y2="'+(ly+50)+'" stroke="#6fb3d9" stroke-width="2.5"/><text x="'+(lx+30)+'" y="'+(ly+54)+'">'+t.sys+'</text>';
+    $('curve').innerHTML = '<g font-family="Source Sans 3, sans-serif" font-size="13" fill="#9ba6af">'+g+'</g>';
 
-    var total = r.parts.reduce(function(a,b){ return a+b.v; }, 0);
-    $('bars').innerHTML = r.parts.map(function(x){
-      return '<div title="' + t.parts[x.k] + ': ' + fmt(x.v,2) + ' MJ/kg" style="width:' + (100*x.v/total) + '%;background:' + COLORS[x.k] + '"></div>';
-    }).join('');
-    $('bkey').innerHTML = r.parts.map(function(x){
-      return '<span><i style="background:' + COLORS[x.k] + '"></i>' + t.parts[x.k] + ' ' + fmt(x.v,2) + '</span>';
-    }).join('');
-    $('check').textContent = r.shc < 2.9 ? t.below : (r.shc > 3.3 ? t.above : t.within);
+    var mx = Math.max(r.pV, r.pF);
+    $('bV').style.width = (100*r.pV/mx)+'%'; $('bF').style.width = (100*r.pF/mx)+'%';
+    $('pV').textContent = fmt(r.pV,1)+' kW'; $('pF').textContent = fmt(r.pF,1)+' kW';
+    var dkw = r.pV - r.pF;
+    $('rSave').textContent = '%' + fmt(100*dkw/r.pV,0); if (lang==='en') $('rSave').textContent = fmt(100*dkw/r.pV,0)+'%';
+    $('rSaveKw').textContent = fmt(dkw,1) + ' kW';
+    $('rMwh').textContent = fmt(dkw*hr/1000,0);
+    $('rCost').textContent = grp(dkw*hr*pr);
+    $('rSpeed').textContent = fmt(100*r.r,0);
+    var pct = (lang==='tr'?'%':'') + fmt(100*r.valveFrac,0) + (lang==='en'?'%':'');
+    var note = t.note.replace('{hv}', fmt(r.hv,1)).replace('{pct}', pct).replace('{hs}', fmt(r.hsys,1));
+    if (r.valveFrac < 0.01) note = t.open;
+    if (qIn > r.qMax) note = t.capped.replace('{q}', grp(r.qMax)) + ' ' + note;
+    $('pNote').textContent = note;
 
-    window.dispatchEvent(new CustomEvent('kiln-params', {detail:p}));
+    $('flowLbl').textContent = grp(r.q) + t.q;
+    $('vfdHz').textContent = 'VFD ' + fmt(50*r.r,0) + ' Hz';
+    $('vfdBox').setAttribute('opacity', mode==='vfd' ? 1 : 0);
+    var close = mode==='valve' ? r.valveFrac : 0;
+    $('gate').setAttribute('height', (28*Math.min(0.9, close*1.4)).toFixed(1));
   }
+
+  // animation: flow speed ∝ Q, impeller speed ∝ pump speed
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var off = 0, ang = 0, last = performance.now();
+  function tick(now){
+    var dt = Math.min(0.1,(now-last)/1000); last = now;
+    if (!reduce && state.q){
+      off -= state.q/150*60*dt; ang += (mode==='vfd'?state.r:1)*540*dt;
+      $('flowPath').setAttribute('stroke-dashoffset', off.toFixed(1));
+      $('impeller').setAttribute('transform','rotate('+(ang%360).toFixed(1)+' 300 186)');
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 
   function setLang(l){
-    lang = l;
-    document.documentElement.lang = l;
-    nodes.forEach(function(n){ if (l === 'en') n.textContent = n.dataset.en; else n.innerHTML = n.dataset.tr; });
-    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
+    lang = l; document.documentElement.lang = l;
+    nodes.forEach(function(n){ if (l==='en') n.textContent = n.dataset.en; else n.innerHTML = n.dataset.tr; });
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang===l)); });
     try { localStorage.setItem('yakcan-lang', l); } catch(e){}
     render();
   }
   document.querySelectorAll('.lang button').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.lang); }); });
-  document.querySelectorAll('.controls input, .controls select').forEach(function(el){ el.addEventListener('input', render); });
-
-  window.KILN.params = params;
-  var saved = 'tr';
-  try { saved = localStorage.getItem('yakcan-lang') || 'tr'; } catch(e){}
-  setLang(saved === 'en' ? 'en' : 'tr');
+  document.querySelectorAll('.mode button').forEach(function(b){ b.addEventListener('click', function(){
+    mode = b.dataset.mode;
+    document.querySelectorAll('.mode button').forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); });
+    render();
+  }); });
+  ['iQ','iHs','iHr','iPr'].forEach(function(id){ $(id).addEventListener('input', render); });
+  var saved='tr'; try { saved = localStorage.getItem('yakcan-lang') || 'tr'; } catch(e){}
+  setLang(saved==='en'?'en':'tr');
 })();
-</script>
-
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-const canvas = document.getElementById('kilnCanvas');
-const stage = canvas.parentElement;
-const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(32, 1, 0.5, 2000);
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true; controls.enablePan = false;
-controls.minPolarAngle = 0.25; controls.maxPolarAngle = 1.5;
-
-scene.add(new THREE.HemisphereLight(0xdfe8ef, 0x1a1d20, 1.1));
-const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(30, 60, 40); scene.add(sun);
-const fill = new THREE.DirectionalLight(0x9fc4dd, 0.5); fill.position.set(-40, 20, -30); scene.add(fill);
-
-const STOPS = [[0,[26,16,53]],[0.3,[123,29,111]],[0.55,[210,74,43]],[0.8,[243,154,33]],[1,[255,243,176]]];
-function heat(T){
-  const t = Math.min(1, Math.max(0, (T-50)/350));
-  for (let i=1;i<STOPS.length;i++){
-    if (t <= STOPS[i][0]){
-      const a = STOPS[i-1], b = STOPS[i], k = (t-a[0])/(b[0]-a[0]);
-      return [0,1,2].map(j => (a[1][j] + (b[1][j]-a[1][j])*k)/255);
-    }
-  }
-  return [1,0.95,0.69];
-}
-
-let kiln = null, rotor = null, shellGeo = null, current = {D:0,L:0,S:0};
-const steel = new THREE.MeshStandardMaterial({color:0x6b7378, metalness:0.6, roughness:0.45});
-const concrete = new THREE.MeshStandardMaterial({color:0x4a5056, roughness:0.9});
-const refractory = new THREE.MeshStandardMaterial({color:0x5a3a2a, roughness:1, side:THREE.BackSide});
-const shellMat = new THREE.MeshStandardMaterial({vertexColors:true, metalness:0.25, roughness:0.6});
-const flameMat = new THREE.MeshBasicMaterial({color:0xffb24a, transparent:true, opacity:0.55, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide});
-
-function disposeGroup(g){ g.traverse(o => { if (o.geometry) o.geometry.dispose(); }); }
-
-function build(D, L, S){
-  if (kiln){ scene.remove(kiln); disposeGroup(kiln); }
-  const R = D/2;
-  kiln = new THREE.Group();
-  kiln.rotation.z = Math.atan(S/100);             // feed end (+x) higher
-  rotor = new THREE.Group(); kiln.add(rotor);
-
-  shellGeo = new THREE.CylinderGeometry(R, R, L, 96, 48, true);
-  shellGeo.rotateZ(-Math.PI/2);                   // axis along x
-  shellGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(shellGeo.attributes.position.count*3), 3));
-  rotor.add(new THREE.Mesh(shellGeo, shellMat));
-  const inner = new THREE.CylinderGeometry(R*0.97, R*0.97, L, 64, 1, true); inner.rotateZ(-Math.PI/2);
-  rotor.add(new THREE.Mesh(inner, refractory));
-
-  const tireX = [-0.32, 0.05, 0.38].map(f => f*L);
-  tireX.forEach(x => {
-    const t = new THREE.Mesh(new THREE.TorusGeometry(R+0.28, 0.24, 12, 72), steel);
-    t.rotation.y = Math.PI/2; t.position.x = x; rotor.add(t);
-    [-1,1].forEach(s => {
-      const a = Math.PI/6, rr = 0.42, dist = R+0.52+rr;
-      const roll = new THREE.Mesh(new THREE.CylinderGeometry(rr, rr, 0.7, 24), steel);
-      roll.rotation.z = Math.PI/2;
-      roll.position.set(x, -dist*Math.cos(a), s*dist*Math.sin(a));
-      kiln.add(roll);
-    });
-    const pierH = 4;
-    const pier = new THREE.Mesh(new THREE.BoxGeometry(1.6, pierH, 2*(R+1.2)), concrete);
-    pier.position.set(x, -(R+1.4) - pierH/2, 0); kiln.add(pier);
-  });
-  const gear = new THREE.Mesh(new THREE.TorusGeometry(R+0.55, 0.14, 8, 96), steel);
-  gear.rotation.y = Math.PI/2; gear.position.x = 0.2*L; rotor.add(gear);
-
-  // feed end: inlet chamber; burner end: burner pipe and flame
-  const inlet = new THREE.Mesh(new THREE.BoxGeometry(3, D*1.8, D*1.5), concrete);
-  inlet.position.set(L/2 + 1.6, D*0.35, 0); kiln.add(inlet);
-  const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 8, 16), steel);
-  pipe.rotation.z = Math.PI/2; pipe.position.set(-L/2 - 2.5, 0, 0); kiln.add(pipe);
-  const flame = new THREE.Mesh(new THREE.ConeGeometry(R*0.38, L*0.16, 24, 1, true), flameMat);
-  flame.rotation.z = -Math.PI/2; flame.position.set(-L/2 + 1.5 + L*0.08, 0, 0); kiln.add(flame);
-
-  scene.add(kiln);
-  current = {D, L, S};
-
-  fit();
-}
-
-function fit(){
-  if (!current.L) return;
-  const span = current.L + 10;
-  const hfov = 2*Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov/2))*camera.aspect);
-  const dist = (span/2)/Math.tan(hfov/2)*1.08;
-  const dir = new THREE.Vector3(-0.18, 0.36, 1).normalize();
-  camera.position.copy(dir.multiplyScalar(dist));
-  controls.target.set(0, -1.5, 0);
-  controls.minDistance = dist*0.3; controls.maxDistance = dist*1.6;
-  controls.update();
-}
-
-function colour(Ts, L){
-  const pos = shellGeo.attributes.position, col = shellGeo.attributes.color;
-  for (let i=0;i<pos.count;i++){
-    const x = (pos.getX(i) + L/2)/L;                  // 0 burner end … 1 feed end
-    const ang = Math.atan2(pos.getZ(i), pos.getY(i));
-    const stripe = Math.cos(ang*12) > 0.93 ? 0.72 : 1;  // makes rotation visible
-    const c = heat(window.KILN.shellT(x, Ts));
-    col.setXYZ(i, c[0]*stripe, c[1]*stripe, c[2]*stripe);
-  }
-  col.needsUpdate = true;
-}
-
-let rpm = 3.5, visible = true, dirty = true;
-function apply(p){
-  if (p.D !== current.D || p.L !== current.L || p.S !== current.S) build(p.D, p.L, p.S);
-  colour(p.Ts, p.L);
-  rpm = p.N; dirty = true;
-}
-window.addEventListener('kiln-params', e => apply(e.detail));
-apply(window.KILN.params());
-
-const lblFeed = document.getElementById('lblFeed'), lblBurner = document.getElementById('lblBurner');
-const v = new THREE.Vector3();
-function place(el, x, y){
-  v.set(x, y, 0); kiln.localToWorld(v); v.project(camera);
-  const w = stage.clientWidth, h = stage.clientHeight;
-  const px = (v.x+1)/2*w, py = (1-v.y)/2*h;
-  const inside = v.z < 1 && px > 40 && px < w-40 && py > 30 && py < h-10;
-  el.style.visibility = inside ? 'visible' : 'hidden';
-  el.style.left = px + 'px'; el.style.top = py + 'px';
-}
-
-function resize(){
-  const w = stage.clientWidth, h = stage.clientHeight;
-  renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); fit(); dirty = true;
-}
-new ResizeObserver(resize).observe(stage); resize();
-new IntersectionObserver(es => es.forEach(e => visible = e.isIntersecting)).observe(stage);
-controls.addEventListener('change', () => dirty = true);
-
-let last = performance.now();
-function tick(now){
-  requestAnimationFrame(tick);
-  const dt = Math.min(0.1, (now-last)/1000); last = now;
-  if (!visible) return;
-  if (!reduce){ rotor.rotation.x += rpm*2*Math.PI/60*dt; dirty = true; }
-  controls.update();
-  if (!dirty) return;
-  renderer.render(scene, camera);
-  place(lblFeed, current.L/2, current.D/2 + 1.2);
-  place(lblBurner, -current.L/2, current.D/2 + 1.2);
-  dirty = reduce ? false : true;
-}
-window.__kilnReady = true;
-requestAnimationFrame(tick);
-</script>
-<script>
-// show a note if the 3D view could not load (e.g. no internet)
-setTimeout(function(){
-  if (window.__kilnReady) return;
-  document.getElementById('fallback').style.display = 'flex';
-  ['lblFeed','lblBurner'].forEach(function(id){ document.getElementById(id).style.display = 'none'; });
-  document.querySelector('.stage .legend').style.display = 'none';
-  document.querySelector('.stage .hint').style.display = 'none';
-}, 6000);
 </script>
 </body>
 </html>
