@@ -33,7 +33,7 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
 h1,h2,h3,h4{font-family:var(--head);margin:0;line-height:1.15;letter-spacing:-.01em}
-h1{font-size:clamp(32px,3.6vw,46px);font-weight:600}
+h1{font-size:clamp(40px,5vw,64px);font-weight:600;letter-spacing:-.02em;max-width:17ch}
 h2{font-size:clamp(28px,3.2vw,38px);font-weight:600}
 h3{font-size:22px;font-weight:600}
 h4{font-size:17px;font-weight:600}
@@ -59,18 +59,19 @@ section{padding:96px 0;border-top:1px solid var(--line)}
 .btn.primary:hover{background:#ec9b55}
 
 /* hero */
-.hero{border-top:0;padding:80px 0 88px}
+.hero{border-top:0;padding:96px 0 104px}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:center}
-.hero p.lede{margin:24px 0 32px;color:var(--muted);font-size:20px;max-width:52ch}
+.hero p.lede{margin:22px 0 34px;color:var(--muted);font-size:21px;max-width:40ch}
 .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
-.flow{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.flow{padding:8px 0}
 .flow svg{width:100%;height:auto}
 
 /* what */
-.what{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;margin-top:48px}
+.what{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 28px 30px}
+.tile svg{width:100%;max-width:220px;height:auto;margin-bottom:22px}
 .what h3{margin-bottom:10px}
 .what p{color:var(--muted)}
-.what .eg{margin-top:14px;padding-left:14px;border-left:2px solid var(--accent);color:var(--text);font-size:16px}
 
 /* cases */
 .case{margin-top:56px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
@@ -165,7 +166,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   .case-head,.results,.mcase{padding:22px 18px}
   .nav .btn{display:none}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pulse{display:none}}
 </style>
 </head>
 <body>
@@ -192,32 +193,52 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1 data-en="We turn scattered data and shop-floor know-how into engineering tools your team uses every day.">Dağınık veriyi ve sahadaki bilgiyi, ekibinizin her gün kullandığı mühendislik araçlarına dönüştürüyoruz.</h1>
-      <p class="lede" data-en="Most plants do not lack data. It sits in DCS trends, spreadsheets, paper forms and in the heads of experienced people. We bring it together, model it with engineering and statistics, and hand it back as a tool that stays in the organisation.">Çoğu tesiste veri eksik değil. DCS trendlerinde, Excel dosyalarında, kâğıt formlarda ve deneyimli çalışanların hafızasında duruyor. Bunları bir araya getiriyor, mühendislik ve istatistikle modelliyor ve kurumun içinde kalacak bir araç olarak geri veriyoruz.</p>
+      <h1 data-en="From scattered data to tools people use.">Dağınık veriden,<br>kullanılan araca.</h1>
+      <p class="lede" data-en="Process engineering, combustion and Lean Six Sigma for manufacturing plants.">Üretim tesisleri için proses mühendisliği, yakma ve Yalın 6 Sigma.</p>
       <div class="cta">
-        <a class="btn primary" href="#ornekler" data-en="See case studies">Örnek çalışmaları inceleyin</a>
+        <a class="btn primary" href="#ornekler" data-en="See case studies">Örnek çalışmalar</a>
         <a class="btn" href="#iletisim" data-en="Contact">İletişim</a>
       </div>
     </div>
     <div class="flow" aria-hidden="true">
-      <svg viewBox="0 0 520 330">
-        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5f6b75"/></marker></defs>
-        <g font-family="Source Sans 3, sans-serif" font-size="14" fill="#e8ecef">
-          <g fill="none" stroke="#3a434b"><rect x="10" y="14" width="194" height="40" rx="8"/><rect x="10" y="70" width="194" height="40" rx="8"/><rect x="10" y="126" width="194" height="40" rx="8"/><rect x="10" y="182" width="194" height="40" rx="8"/><rect x="10" y="238" width="194" height="40" rx="8"/></g>
-          <text x="24" y="39" data-en="DCS / SCADA trends">DCS / SCADA trendleri</text>
-          <text x="24" y="95" data-en="Spreadsheets">Excel dosyaları</text>
-          <text x="24" y="151" data-en="Paper forms, shift logs">Kâğıt formlar, vardiya defteri</text>
-          <text x="24" y="207" data-en="Lab results">Laboratuvar sonuçları</text>
-          <text x="24" y="263" data-en="Experienced staff">Deneyimli çalışanlar</text>
-          <g fill="none" stroke="#5f6b75" stroke-width="1.2"><path d="M204 34 C 240 34, 230 146, 262 146" marker-end="url(#ar)"/><path d="M204 90 C 240 90, 230 150, 262 150" marker-end="url(#ar)"/><path d="M204 146 H 262" marker-end="url(#ar)"/><path d="M204 202 C 240 202, 230 154, 262 154" marker-end="url(#ar)"/><path d="M204 258 C 240 258, 230 158, 262 158" marker-end="url(#ar)"/></g>
-          <rect x="266" y="118" width="110" height="64" rx="8" fill="rgba(111,179,217,.12)" stroke="#6fb3d9"/>
-          <text x="321" y="145" text-anchor="middle" font-weight="600" data-en="Shared model">Ortak model</text>
-          <text x="321" y="164" text-anchor="middle" font-size="12.5" fill="#9ba6af" data-en="balances, statistics">denge, istatistik</text>
-          <path d="M376 150 H 398" stroke="#5f6b75" stroke-width="1.2" marker-end="url(#ar)"/>
-          <rect x="402" y="118" width="108" height="64" rx="8" fill="rgba(224,135,58,.16)" stroke="#e0873a"/>
-          <text x="456" y="145" text-anchor="middle" font-weight="600" data-en="Tool">Araç</text>
-          <text x="456" y="164" text-anchor="middle" font-size="12.5" fill="#9ba6af" data-en="used daily">her gün kullanılır</text>
-          <text x="10" y="316" font-size="13" fill="#9ba6af" data-en="Typical sources of information in a plant">Bir tesiste bilginin tipik olarak dağıldığı yerler</text>
+      <svg viewBox="0 0 520 300">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4c5761"/></marker>
+          <radialGradient id="glowB"><stop offset="0" stop-color="#6fb3d9" stop-opacity=".35"/><stop offset="1" stop-color="#6fb3d9" stop-opacity="0"/></radialGradient>
+          <radialGradient id="glowA"><stop offset="0" stop-color="#e0873a" stop-opacity=".4"/><stop offset="1" stop-color="#e0873a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <g font-family="Source Sans 3, sans-serif" font-size="14" fill="#c9d1d7">
+          <g fill="#1f2429" stroke="#333c44">
+            <rect x="8" y="20" width="176" height="36" rx="18"/><rect x="8" y="72" width="176" height="36" rx="18"/><rect x="8" y="124" width="176" height="36" rx="18"/><rect x="8" y="176" width="176" height="36" rx="18"/><rect x="8" y="228" width="176" height="36" rx="18"/>
+          </g>
+          <text x="28" y="43" data-en="DCS trends">DCS trendleri</text>
+          <text x="28" y="95" data-en="Spreadsheets">Excel dosyaları</text>
+          <text x="28" y="147" data-en="Shift logs">Vardiya defterleri</text>
+          <text x="28" y="199" data-en="Lab results">Laboratuvar</text>
+          <text x="28" y="251" data-en="Experience">Usta bilgisi</text>
+          <g fill="none" stroke="#333c44" stroke-width="1.2">
+            <path id="p1" d="M184 38 C 240 38, 236 142, 290 142"/>
+            <path id="p2" d="M184 90 C 240 90, 236 146, 290 146"/>
+            <path id="p3" d="M184 142 L 290 150"/>
+            <path id="p4" d="M184 194 C 240 194, 236 154, 290 154"/>
+            <path id="p5" d="M184 246 C 240 246, 236 158, 290 158"/>
+            <path id="p6" d="M370 150 H 418" stroke="#4c5761" marker-end="url(#ar)"/>
+          </g>
+          <circle cx="330" cy="150" r="62" fill="url(#glowB)"/>
+          <circle cx="330" cy="150" r="38" fill="#1b2a33" stroke="#6fb3d9" stroke-width="1.5"/>
+          <text x="330" y="155" text-anchor="middle" font-weight="600" fill="#e8ecef" data-en="Model">Model</text>
+          <circle cx="462" cy="150" r="56" fill="url(#glowA)"/>
+          <rect x="424" y="118" width="76" height="64" rx="10" fill="#2b2118" stroke="#e0873a" stroke-width="1.5"/>
+          <path d="M436 166 L450 150 L462 158 L476 138 L488 144" fill="none" stroke="#e0873a" stroke-width="2"/>
+          <text x="462" y="206" text-anchor="middle" font-size="13" fill="#9ba6af" data-en="Tool">Araç</text>
+          <g class="pulse" fill="#6fb3d9">
+            <circle r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s"><mpath href="#p1"/></animateMotion></circle>
+            <circle r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0.6s"><mpath href="#p2"/></animateMotion></circle>
+            <circle r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="1.3s"><mpath href="#p3"/></animateMotion></circle>
+            <circle r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="1.9s"><mpath href="#p4"/></animateMotion></circle>
+            <circle r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="2.5s"><mpath href="#p5"/></animateMotion></circle>
+            <circle r="3.5" fill="#e0873a"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.8s"><mpath href="#p6"/></animateMotion></circle>
+          </g>
         </g>
       </svg>
     </div>
@@ -227,22 +248,39 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <section id="ne">
   <div class="wrap">
     <h2 data-en="What we do">Ne yapıyoruz</h2>
-    <p class="intro" data-en="Three steps that build on each other. Each one leaves something concrete behind.">Birbirinin üzerine kurulan üç adım. Her biri geride somut bir şey bırakır.</p>
     <div class="what">
-      <div>
-        <h3 data-en="Bring the data together">Veriyi toparlamak</h3>
-        <p data-en="We map where the information lives, connect sources that never talked to each other and agree on one set of definitions.">Bilginin nerede durduğunu haritalıyor, birbiriyle hiç konuşmamış kaynakları bağlıyor ve tek bir tanım setinde uzlaşıyoruz.</p>
-        <p class="eg" data-en="Example: a downtime code list that maintenance, production and quality all use the same way.">Örnek: bakım, üretim ve kalitenin aynı şekilde kullandığı tek bir duruş kodu listesi.</p>
+      <div class="tile">
+        <svg viewBox="0 0 200 110" aria-hidden="true">
+          <g fill="none" stroke="#4c5761" stroke-width="1.2"><rect x="14" y="16" width="22" height="16" rx="3"/><rect x="48" y="62" width="22" height="16" rx="3" transform="rotate(-12 59 70)"/><rect x="20" y="78" width="22" height="16" rx="3" transform="rotate(10 31 86)"/><rect x="56" y="22" width="22" height="16" rx="3" transform="rotate(8 67 30)"/></g>
+          <path d="M92 55 H 112" stroke="#4c5761" stroke-width="1.2"/><path d="M108 50 L114 55 L108 60" fill="none" stroke="#4c5761" stroke-width="1.2"/>
+          <g stroke="#6fb3d9" stroke-width="1.2" fill="none"><rect x="124" y="24" width="62" height="62" rx="6"/><path d="M124 44 H186 M124 65 H186 M145 24 V86 M166 24 V86"/></g>
+          <rect x="124" y="24" width="62" height="20" rx="6" fill="#6fb3d9" opacity=".18"/>
+        </svg>
+        <h3 data-en="Bring together">Toparlamak</h3>
+        <p data-en="Data from separate sources, joined in one model.">Ayrı kaynaklardaki veri, tek modelde birleşir.</p>
       </div>
-      <div>
-        <h3 data-en="Write down the know-how">Örtük bilgiyi yazıya dökmek</h3>
-        <p data-en="Much of how a plant really runs lives in experienced people. We turn their rules of thumb into explicit rules and test them against the data.">Bir tesisin gerçekte nasıl döndüğünün büyük kısmı deneyimli çalışanlardadır. Pratik kurallarını açık kurallara çeviriyor ve veriyle test ediyoruz.</p>
-        <p class="eg" data-en="Example: the recipe correction an operator makes by feel, written as a rule and checked against past batches.">Örnek: bir operatörün hissiyatla yaptığı reçete düzeltmesi, kurala dönüştürülüp geçmiş partilerle sınanır.</p>
+      <div class="tile">
+        <svg viewBox="0 0 200 110" aria-hidden="true">
+          <path d="M18 24 h58 a8 8 0 0 1 8 8 v26 a8 8 0 0 1 -8 8 h-38 l-12 12 v-12 h-8 a8 8 0 0 1 -8 -8 v-26 a8 8 0 0 1 8 -8z" fill="none" stroke="#4c5761" stroke-width="1.2"/>
+          <g fill="#4c5761"><circle cx="36" cy="45" r="2.5"/><circle cx="48" cy="45" r="2.5"/><circle cx="60" cy="45" r="2.5"/></g>
+          <path d="M98 55 H 118" stroke="#4c5761" stroke-width="1.2"/><path d="M114 50 L120 55 L114 60" fill="none" stroke="#4c5761" stroke-width="1.2"/>
+          <rect x="128" y="18" width="56" height="74" rx="6" fill="none" stroke="#6fb3d9" stroke-width="1.2"/>
+          <g stroke="#6fb3d9" stroke-width="2" stroke-linecap="round"><path d="M138 34 H170"/><path d="M138 48 H174" opacity=".6"/><path d="M138 62 H164" opacity=".6"/></g>
+          <path d="M138 78 l5 5 l10 -11" fill="none" stroke="#e0873a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 data-en="Write it down">Yazıya dökmek</h3>
+        <p data-en="Know-how turned into rules and tested with data.">Usta bilgisi kurala dönüşür, veriyle sınanır.</p>
       </div>
-      <div>
-        <h3 data-en="Build the tool">Araca dönüştürmek</h3>
-        <p data-en="The result becomes a browser-based tool that needs no installation. Data stays with you; the source code is handed over.">Sonuç, kurulum gerektirmeyen ve tarayıcıda çalışan bir araca dönüşür. Veri sizde kalır, kaynak kod teslim edilir.</p>
-        <p class="eg" data-en="Example: a shift log that turns entries into a weekly Pareto without anyone retyping them.">Örnek: girilen kayıtları kimse yeniden yazmadan haftalık Pareto'ya çeviren vardiya defteri.</p>
+      <div class="tile">
+        <svg viewBox="0 0 200 110" aria-hidden="true">
+          <rect x="34" y="14" width="132" height="84" rx="8" fill="#2b2118" stroke="#e0873a" stroke-width="1.2"/>
+          <path d="M34 30 H166" stroke="#e0873a" stroke-opacity=".5"/>
+          <g fill="#e0873a" opacity=".5"><circle cx="44" cy="22" r="2.5"/><circle cx="52" cy="22" r="2.5"/><circle cx="60" cy="22" r="2.5"/></g>
+          <path d="M46 82 L70 60 L90 70 L112 46 L130 54 L154 40" fill="none" stroke="#e0873a" stroke-width="2"/>
+          <path d="M46 52 H154" stroke="#4c5761" stroke-dasharray="3 4"/>
+        </svg>
+        <h3 data-en="Build the tool">Araca çevirmek</h3>
+        <p data-en="A browser tool with no installation. Data stays with you.">Kurulumsuz, tarayıcıda çalışan araç. Veri sizde kalır.</p>
       </div>
     </div>
   </div>
@@ -251,7 +289,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <section id="ornekler">
   <div class="wrap">
     <h2 data-en="Case studies">Örnek çalışmalar</h2>
-    <p class="intro" data-en="These examples were prepared to show our method. They contain no client data; the kiln model runs on typical published values for a dry-process kiln.">Bu örnekler yöntemimizi göstermek için hazırlandı. Müşteri verisi içermezler; fırın modeli kuru proses bir fırının yayımlanmış tipik değerleriyle çalışır.</p>
+    <p class="intro" data-en="Examples of our method. No client data; the kiln runs on typical published values.">Yöntemimizi gösteren örnekler. Müşteri verisi içermez; fırın modeli yayımlanmış tipik değerlerle çalışır.</p>
 
     <article class="case">
       <div class="case-head">
@@ -259,7 +297,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
           <span class="tag" data-en="Interactive model">İnteraktif model</span>
           <h3 data-en="Cement rotary kiln: heat balance, residence time and CO₂">Çimento döner fırını: ısı dengesi, kalma süresi ve CO₂</h3>
         </div>
-        <p data-en="A kiln's numbers are usually spread across DCS screens, lab reports and the burner man's notebook. This model puts the basic mechanisms on one screen: combustion stoichiometry, calcination, shell losses and material residence time. Change a parameter and every result updates.">Bir fırının sayıları genelde DCS ekranlarına, laboratuvar raporlarına ve ocakçının defterine dağılmış durumdadır. Bu model temel mekanizmaları tek ekranda toplar: yanma stokiyometrisi, kalsinasyon, kabuk kayıpları ve malzeme kalma süresi. Bir parametreyi değiştirin, tüm sonuçlar güncellenir.</p>
+        <p data-en="Combustion, calcination, shell loss and residence time on one screen. Change a parameter; every result updates.">Yanma, kalsinasyon, kabuk kaybı ve kalma süresi tek ekranda. Bir parametreyi değiştirin, tüm sonuçlar güncellensin.</p>
       </div>
       <div class="kiln">
         <div class="stage">
@@ -374,7 +412,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <section id="uzmanlik">
   <div class="wrap">
     <h2 data-en="Expertise">Uzmanlık</h2>
-    <p class="intro" data-en="The work is most useful where these three meet: process chemistry, thermal systems and statistics are rarely found in the same person.">İş en çok bu üçünün kesiştiği yerde değer üretir: proses kimyası, ısıl sistemler ve istatistik nadiren aynı kişide bulunur.</p>
+    <p class="intro" data-en="Most useful where the three meet.">En çok, üçünün kesiştiği yerde işe yarar.</p>
     <div class="exp">
       <div>
         <h3 data-en="Lean Six Sigma">Yalın 6 Sigma</h3>
@@ -411,7 +449,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <section id="surec">
   <div class="wrap">
     <h2 data-en="How we work">Çalışma şekli</h2>
-    <p class="intro" data-en="We start small. Each next step is decided together, based on measured results.">Küçük başlarız. Her sonraki adıma ölçülmüş sonuçlara bakarak birlikte karar veririz.</p>
+    <p class="intro" data-en="Start small; decide each next step on measured results.">Küçük başlarız; her adıma ölçülmüş sonuçla karar veririz.</p>
     <ol class="steps">
       <li><h4 data-en="Discovery">Keşif</h4><span class="d" data-en="1–3 weeks">1-3 hafta</span><p data-en="Observation in the departments, an information map and a prioritised list.">Departmanlarda gözlem, bilgi haritası ve önceliklendirilmiş liste.</p></li>
       <li><h4 data-en="Measure">Ölçüm</h4><span class="d" data-en="agreed at the start">başta kararlaştırılır</span><p data-en="A written baseline and a protocol for proving the improvement.">Yazılı başlangıç değeri ve iyileşmeyi kanıtlayacak protokol.</p></li>
@@ -532,7 +570,7 @@ window.KILN = (function(){
 (function(){
   var lang = 'tr';
   var nodes = document.querySelectorAll('[data-en]');
-  nodes.forEach(function(n){ n.dataset.tr = n.textContent; });
+  nodes.forEach(function(n){ n.dataset.tr = n.innerHTML; });
 
   var T = {
     tr:{ dec:',', perT:'kg/t klinker', proc:'proses', fuel:'yakıt', shellPer:'MJ/kg klinker',
@@ -595,7 +633,7 @@ window.KILN = (function(){
   function setLang(l){
     lang = l;
     document.documentElement.lang = l;
-    nodes.forEach(function(n){ n.textContent = l === 'en' ? n.dataset.en : n.dataset.tr; });
+    nodes.forEach(function(n){ if (l === 'en') n.textContent = n.dataset.en; else n.innerHTML = n.dataset.tr; });
     document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
     try { localStorage.setItem('yakcan-lang', l); } catch(e){}
     render();
